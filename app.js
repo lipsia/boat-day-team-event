@@ -178,6 +178,8 @@
     if (EVENT.mapsUrl) {
       $("event-maps-link").href = EVENT.mapsUrl;
       $("event-maps-link-2").href = EVENT.mapsUrl;
+      var startMapLink = $("start-map-link");
+      if (startMapLink) startMapLink.href = EVENT.mapsUrl;
     }
     if (EVENT.mapsEmbedUrl) $("map-frame").src = EVENT.mapsEmbedUrl;
 
@@ -195,18 +197,18 @@
   /* ---------------------------------------------------- Fun ticker */
 
   var TICKER_LINES = [
-    "*** RULE #1: THE PERSON HOLDING THE SNACKS DECIDES THE ROUTE ***",
-    ">>> SUNSCREEN IS NOT A PERSONALITY TRAIT, IT IS A REQUIREMENT <<<",
-    "NOBODY HAS EVER REGRETTED BRINGING TOO MANY GRAPES",
-    "THE LAKE IS NOT A SPREADSHEET. YOU CANNOT SORT IT.",
-    "STANDUP IS CANCELLED. STANDING UP IN THE BOAT ALSO IS.",
-    "LEIPZIG HAS MORE WATER THAN YOU THINK — RESPECT IT",
-    "BRING A JUMPER, THE SUN CLOCKS OFF EARLIER THAN YOU DO",
-    "IF THE POTATO SALAD HAS BEEN WARM SINCE NOON, LET IT GO",
-    "WHOEVER FORGETS THE BOTTLE OPENER ROWS BACK ALONE",
-    "YES SOMEONE WILL FALL IN ~ NO WE ARE NOT TAKING BETS ~ (WE ARE)",
-    "THIS PAGE IS BEST ENJOYED WITH A DIAL-UP MODEM SOUND IN YOUR HEAD",
-    "Y2K COMPLIANT ~ BOAT COMPLIANT ~ SNACK COMPLIANT",
+    "Did you know… the person holding the snacks decides the route?",
+    "Sunscreen is not a personality trait, but it is a requirement.",
+    "Nobody has ever regretted bringing too many grapes.",
+    "The lake is not a spreadsheet. You cannot sort it.",
+    "Standup is cancelled. Standing up in the boat also is.",
+    "Leipzig has more water than you think. Respect it.",
+    "Bring a jumper — the sun clocks off earlier than you do.",
+    "If the potato salad has been warm since noon, let it go.",
+    "Whoever forgets the bottle opener rows back alone.",
+    "Yes, someone will fall in. No, we are not taking bets. (We are.)",
+    "This window cannot be resized, minimised, or closed. Sorry.",
+    "Press Start to go somewhere. Any Start. There is only one.",
   ];
 
   function startTicker() {
@@ -222,7 +224,65 @@
       /* force a reflow so the fade-in animation restarts */
       void el.offsetWidth;
       el.style.animation = "";
-    }, 26000);
+    }, 9000);
+  }
+
+  /* ---------------------------------------------------- Desktop chrome */
+
+  /* Taskbar clock, in the user's locale, ticking every 15s. */
+  function startClock() {
+    var el = $("clock");
+    if (!el) return;
+    var tick = function () {
+      var now = new Date();
+      el.textContent = now.toLocaleTimeString(undefined, {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    };
+    tick();
+    setInterval(tick, 15000);
+  }
+
+  /* Start button opens the menu; Escape, outside clicks and picking an
+     item all close it again. */
+  function startMenu() {
+    var btn = $("start-btn");
+    var menu = $("start-menu");
+    if (!btn || !menu) return;
+
+    var open = function (state) {
+      menu.hidden = !state;
+      btn.setAttribute("aria-expanded", state ? "true" : "false");
+    };
+
+    btn.addEventListener("click", function (event) {
+      event.stopPropagation();
+      open(menu.hidden);
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!menu.hidden && !menu.contains(event.target)) open(false);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !menu.hidden) {
+        open(false);
+        btn.focus();
+      }
+    });
+
+    /* the two decorative entries do not navigate anywhere */
+    menu.addEventListener("click", function (event) {
+      var link = event.target.closest("a");
+      if (!link) return;
+      if (link.hasAttribute("data-noop")) {
+        event.preventDefault();
+        var tip = $("ticker-text");
+        if (tip) tip.textContent = "It is now safe to turn off your computer.";
+      }
+      open(false);
+    });
   }
 
   /* ---------------------------------------------------- Snacks */
@@ -413,6 +473,8 @@
 
   function init() {
     renderEvent();
+    startClock();
+    startMenu();
     startTicker();
     renderWishes();
     renderRides();

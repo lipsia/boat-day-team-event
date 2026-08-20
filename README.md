@@ -1,6 +1,6 @@
-# ⛵ BOAT DAY 2K — Lipsia Digital
+# ⛵ Boat Day — Lipsia Digital
 
-A small, loud, extremely Y2K static website for our team event at the
+A static website for our team event, dressed as Windows Millennium Edition, at the
 [Bootsverleih in Leipzig](https://www.google.de/maps/place/Bootsverleih+in+Leipzig/@51.2641356,12.3420663,17.97z/data=!4m6!3m5!1s0x47a6fa7335079b25:0xc1e0fb89ee4f9d89!8m2!3d51.2632374!4d12.3427702!16s%2Fg%2F11ckqrfwyk).
 
 - **Snacks & Sips** — what, how much, and who's bringing it (every wish is tied to a person)
@@ -8,8 +8,8 @@ A small, loud, extremely Y2K static website for our team event at the
 - The two forms are completely independent
 - Everything is visible to everyone, and anything can be thrown overboard again
 
-No build step, no dependencies, no framework. Six files, chrome gradients,
-a starfield and a marquee.
+No build step, no dependencies, no framework, no external fonts. Six files,
+a desktop, a taskbar and a lot of 3D bevels.
 
 **Live:** https://lipsia.github.io/boat-day-team-event/
 
@@ -63,9 +63,9 @@ file for up to ten minutes. Bump the version query in `index.html` so nobody
 has to clear a cache:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=5" />
-<script src="config.js?v=5"></script>
-<script src="app.js?v=5"></script>
+<link rel="stylesheet" href="styles.css?v=7" />
+<script src="config.js?v=7"></script>
+<script src="app.js?v=7"></script>
 ```
 
 To check which version your own browser has, in the console:
@@ -88,7 +88,7 @@ python3 -m http.server 8000
 | File         | Purpose                                                  |
 | ------------ | -------------------------------------------------------- |
 | `index.html` | Structure: hero, map, both forms and lists               |
-| `styles.css` | Chrome, gloss, starfield, marquee, beveled windows        |
+| `styles.css` | Win9x/ME chrome: bevels, title bars, taskbar, start menu |
 | `app.js`     | Forms, rendering, Supabase access, snack-emoji guessing  |
 | `config.js`  | **Credentials and event details — edit this one**        |
 | `schema.sql` | Tables and access rules for Supabase                     |
@@ -109,8 +109,11 @@ there, or clear everything out after the event.
   goes still for anyone who asks their OS for that.
 - The snack emoji is decoration derived from the text at render time. It is
   never stored, so editing the keyword list can't corrupt existing rows.
-- Empty-state messages (`.empty`) are deliberately styled flat — no border, no
-  fill, no gloss. They are status text, not buttons, and they should never look
-  tappable. Same goes for the `.stat` readouts.
+- Empty-state messages (`.empty`) are deliberately plain italic text inside the
+  list view — no border, no fill. They are status text, not buttons, and must
+  never look clickable. Same goes for the `.stat` readouts.
+- The whole 3D look comes from two `box-shadow` recipes (raised and sunken)
+  documented at the top of `styles.css`. Reuse those rather than inventing new
+  border colours.
 - The visual layer is CSS only. Element IDs and form field names are the
   contract with `app.js` and the database; restyling never touches them.

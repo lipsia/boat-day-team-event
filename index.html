@@ -4,136 +4,120 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>BOAT DAY 2K · Lipsia Digital</title>
+    <title>Boat Day - Lipsia Digital</title>
     <meta
       name="description"
-      content="Lipsia Digital Boat Day — claim your snacks, sort the carpool, party like it is 1999."
+      content="Lipsia Digital Boat Day — claim your snacks, sort the carpool. Windows Millennium Edition."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=VT323&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css?v=5" />
+    <link rel="stylesheet" href="styles.css?v=7" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>"
     />
   </head>
   <body>
-    <!-- starfield -->
-    <div class="stars" aria-hidden="true">
-      <div class="stars__layer stars__layer--1"></div>
-      <div class="stars__layer stars__layer--2"></div>
-      <div class="stars__layer stars__layer--3"></div>
-    </div>
-
-    <!-- floating y2k blobs -->
-    <div class="blobs" aria-hidden="true">
-      <span class="blob blob--1"></span>
-      <span class="blob blob--2"></span>
-      <span class="blob blob--3"></span>
+    <!-- ============================================ DESKTOP ICONS -->
+    <div class="desk-icons">
+      <span class="deskicon" aria-hidden="true">
+        <span class="deskicon__img">🖥️</span>
+        <span class="deskicon__label">My Computer</span>
+      </span>
+      <a class="deskicon" href="#snacks">
+        <span class="deskicon__img" aria-hidden="true">📝</span>
+        <span class="deskicon__label">Snacks.txt</span>
+      </a>
+      <a class="deskicon" href="#transport">
+        <span class="deskicon__img" aria-hidden="true">🚗</span>
+        <span class="deskicon__label">Rideshare.exe</span>
+      </a>
+      <span class="deskicon" aria-hidden="true">
+        <span class="deskicon__img">🗑️</span>
+        <span class="deskicon__label">Recycle Bin</span>
+      </span>
     </div>
 
     <div id="banner" class="banner" hidden></div>
 
-    <!-- ============================================ HERO -->
-    <header class="hero">
-      <div class="flare" aria-hidden="true"></div>
-
-      <div class="sparkles" aria-hidden="true">
-        <span class="sparkle sparkle--1">✦</span>
-        <span class="sparkle sparkle--2">✧</span>
-        <span class="sparkle sparkle--3">✦</span>
-        <span class="sparkle sparkle--4">✧</span>
-        <span class="sparkle sparkle--5">✦</span>
-      </div>
-
-      <div class="hero__inner">
-        <p class="hero__eyebrow">
-          <span class="tag-3d" id="event-company">Lipsia Digital</span>
-          <span class="blink-soft">★ presents ★</span>
-        </p>
-
-        <h1 class="chrome" id="event-title" data-text="Boat Day">Boat Day</h1>
-
-        <p class="hero__sub2000" aria-hidden="true">·:·＊ 2 0 0 0 ＊·:·</p>
-
-        <p class="hero__subtitle" id="event-subtitle">
-          Same team, fewer walls, considerably more water
-        </p>
-
-        <p class="hero__date" id="event-date" hidden></p>
-
-        <div class="hero__meta">
-          <a class="glossy glossy--aqua" id="event-maps-link" href="#" target="_blank" rel="noopener">
-            <span aria-hidden="true">🌐</span>
-            <span id="event-location">Bootsverleih in Leipzig</span>
-          </a>
-          <a class="glossy glossy--magenta" href="#snacks">
-            <span aria-hidden="true">🍕</span> Snack list
-          </a>
-          <a class="glossy glossy--lime" href="#transport">
-            <span aria-hidden="true">🚗</span> Rideshare
-          </a>
+    <main class="desktop">
+      <!-- ============================================ WELCOME -->
+      <section class="win win--welcome" aria-labelledby="event-title">
+        <div class="titlebar">
+          <span class="titlebar__icon" aria-hidden="true">⛵</span>
+          <span class="titlebar__text">Welcome to Boat Day</span>
+          <span class="titlebar__btns" aria-hidden="true">
+            <i class="tbtn">_</i><i class="tbtn">❒</i><i class="tbtn tbtn--x">✕</i>
+          </span>
         </div>
 
-        <p class="badges">
-          <span class="badge98">✨ NEW!</span>
-          <span class="badge98">Best viewed in 800×600</span>
-          <span class="badge98">100% CHANCE OF FUN</span>
-        </p>
-      </div>
+        <div class="splash">
+          <div class="splash__side" aria-hidden="true">
+            <span class="splash__flag"></span>
+            <span class="splash__me">Millennium<br />Edition</span>
+          </div>
+          <div class="splash__main">
+            <p class="splash__eyebrow" id="event-company">Lipsia Digital</p>
+            <h1 class="splash__title" id="event-title">Boat Day</h1>
+            <p class="splash__sub" id="event-subtitle">
+              Same team, fewer walls, considerably more water
+            </p>
+            <p class="splash__date" id="event-date" hidden></p>
 
-      <div class="boat" aria-hidden="true">⛵</div>
+            <p class="splash__body">
+              Claim a snack, sort out the carpool. Everything you type here is
+              visible to the whole team.
+            </p>
 
-      <div class="chromewave" aria-hidden="true">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="chromeGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#ffffff" />
-              <stop offset="35%" stop-color="#8fe8ff" />
-              <stop offset="55%" stop-color="#0a7fbf" />
-              <stop offset="100%" stop-color="#04263d" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M0,70 C180,20 420,100 720,60 C1020,20 1260,100 1440,50 L1440,120 L0,120 Z"
-            fill="url(#chromeGrad)"
-          />
-        </svg>
-      </div>
-    </header>
+            <div class="btnrow">
+              <a class="btn9" id="event-maps-link" href="#" target="_blank" rel="noopener">
+                <span aria-hidden="true">🌐</span>
+                <span id="event-location">Bootsverleih in Leipzig</span>
+              </a>
+              <a class="btn9" href="#snacks">Snack list</a>
+              <a class="btn9" href="#transport">Rideshare</a>
+            </div>
+          </div>
+        </div>
 
-    <!-- marquee, obviously -->
-    <div class="marquee">
-      <div class="marquee__track">
-        <span id="ticker-text">Loading questionable boating advice…</span>
-        <span class="marquee__sep" aria-hidden="true">◆</span>
-        <span aria-hidden="true" class="marquee__ghost">
-          Sign the snack list ★ Sign the snack list ★ Sign the snack list
-        </span>
-      </div>
-    </div>
+        <div class="statusbar">
+          <span class="statusbar__cell statusbar__cell--grow">Ready</span>
+          <span class="statusbar__cell">100% chance of fun</span>
+          <span class="statusbar__cell">⛵</span>
+        </div>
+      </section>
 
-    <main class="wrap">
+      <!-- ============================================ TIP OF THE DAY -->
+      <section class="win win--tip" aria-label="Tip of the day">
+        <div class="titlebar titlebar--inactive">
+          <span class="titlebar__icon" aria-hidden="true">💡</span>
+          <span class="titlebar__text">Tip of the Day</span>
+          <span class="titlebar__btns" aria-hidden="true">
+            <i class="tbtn">_</i><i class="tbtn">❒</i><i class="tbtn tbtn--x">✕</i>
+          </span>
+        </div>
+        <div class="tip">
+          <span class="tip__bulb" aria-hidden="true">💡</span>
+          <p class="tip__text"><span id="ticker-text">Did you know…</span></p>
+        </div>
+      </section>
+
       <!-- ============================================ MAP -->
       <section class="win" aria-labelledby="map-heading">
-        <div class="win__bar">
-          <span class="win__dots" aria-hidden="true"
-            ><i></i><i></i><i></i
-          ></span>
-          <h2 class="win__title" id="map-heading">
-            <span aria-hidden="true">🌐</span> WHERE_THE_BOAT_HAPPENS.HTM
-          </h2>
-          <span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>✕</i></span>
+        <div class="titlebar">
+          <span class="titlebar__icon" aria-hidden="true">🌐</span>
+          <span class="titlebar__text" id="map-heading">Where the boat happens</span>
+          <span class="titlebar__btns" aria-hidden="true">
+            <i class="tbtn">_</i><i class="tbtn">❒</i><i class="tbtn tbtn--x">✕</i>
+          </span>
         </div>
-        <div class="win__body">
+        <div class="menubar" aria-hidden="true">
+          <span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span>
+          <span>F<u>a</u>vorites</span><span><u>H</u>elp</span>
+        </div>
+        <div class="client">
           <p class="lead">
             If you end up somewhere without water, you have gone too far.
             <a class="link" id="event-maps-link-2" href="#" target="_blank" rel="noopener"
-              >Open in Maps »</a
+              >Open in Maps</a
             >
           </p>
           <div class="map">
@@ -145,210 +129,281 @@
             ></iframe>
           </div>
         </div>
+        <div class="statusbar">
+          <span class="statusbar__cell statusbar__cell--grow">Bootsverleih in Leipzig</span>
+          <span class="statusbar__cell">Internet zone</span>
+        </div>
       </section>
 
       <div class="columns">
         <!-- ============================================ SNACKS -->
-        <section class="win win--snacks" id="snacks" aria-labelledby="snacks-heading">
-          <div class="win__bar">
-            <span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <h2 class="win__title" id="snacks-heading">
-              <span aria-hidden="true">🍕</span> SNACKS_AND_SIPS.EXE
-            </h2>
-            <span class="count" id="wish-count">0</span>
+        <section class="win" id="snacks" aria-labelledby="snacks-heading">
+          <div class="titlebar">
+            <span class="titlebar__icon" aria-hidden="true">🍕</span>
+            <span class="titlebar__text" id="snacks-heading">Snacks and Sips</span>
+            <span class="titlebar__btns" aria-hidden="true">
+              <i class="tbtn">_</i><i class="tbtn">❒</i><i class="tbtn tbtn--x">✕</i>
+            </span>
+          </div>
+          <div class="menubar" aria-hidden="true">
+            <span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span>
+            <span><u>H</u>elp</span>
           </div>
 
-          <div class="win__body">
-            <p class="lead">
-              What comes aboard? Every wish gets a name attached — so we know who
-              to thank, or quietly judge. <span class="blink-soft">◄ sign it!</span>
-            </p>
+          <div class="client">
+            <fieldset class="group">
+              <legend>Add a snack</legend>
+              <p class="lead">
+                Every wish gets a name attached — so we know who to thank, or
+                quietly judge.
+              </p>
 
-            <form id="wish-form" class="form" novalidate>
-              <div class="field">
-                <label for="wish-name">What are we eating?</label>
-                <input
-                  id="wish-name"
-                  name="item"
-                  type="text"
-                  required
-                  maxlength="80"
-                  autocomplete="off"
-                  placeholder="e.g. suspiciously large watermelon"
-                />
-              </div>
+              <form id="wish-form" class="form" novalidate>
+                <div class="field">
+                  <label for="wish-name">What are we eating?</label>
+                  <input
+                    id="wish-name"
+                    name="item"
+                    type="text"
+                    required
+                    maxlength="80"
+                    autocomplete="off"
+                    placeholder="e.g. suspiciously large watermelon"
+                  />
+                </div>
 
-              <div class="field field--half">
-                <label for="wish-amount">How much?</label>
-                <input
-                  id="wish-amount"
-                  name="amount"
-                  type="text"
-                  required
-                  maxlength="40"
-                  autocomplete="off"
-                  placeholder="e.g. 2 trays"
-                />
-              </div>
+                <div class="field field--half">
+                  <label for="wish-amount">How much?</label>
+                  <input
+                    id="wish-amount"
+                    name="amount"
+                    type="text"
+                    required
+                    maxlength="40"
+                    autocomplete="off"
+                    placeholder="e.g. 2 trays"
+                  />
+                </div>
 
-              <div class="field field--half">
-                <label for="wish-author">Who's bringing it?</label>
-                <input
-                  id="wish-author"
-                  name="author"
-                  type="text"
-                  required
-                  maxlength="60"
-                  autocomplete="name"
-                  placeholder="your name"
-                />
-              </div>
+                <div class="field field--half">
+                  <label for="wish-author">Who's bringing it?</label>
+                  <input
+                    id="wish-author"
+                    name="author"
+                    type="text"
+                    required
+                    maxlength="60"
+                    autocomplete="name"
+                    placeholder="your name"
+                  />
+                </div>
 
-              <button class="glossy glossy--magenta btn" type="submit">
-                <span aria-hidden="true">🧊</span> Toss it in the cooler
-              </button>
-              <p class="form__error" id="wish-error" role="alert" hidden></p>
-            </form>
+                <div class="form__actions">
+                  <button class="btn9 btn9--default" type="submit">
+                    Add to cooler
+                  </button>
+                </div>
+                <p class="form__error" id="wish-error" role="alert" hidden></p>
+              </form>
+            </fieldset>
 
-            <ul class="list" id="wish-list"></ul>
-            <p class="empty" id="wish-empty">
-              Snack list is empty. Somebody has to go first.
-            </p>
+            <div class="listhead" aria-hidden="true">
+              <span class="listhead__col listhead__col--grow">Item</span>
+              <span class="listhead__col">Amount</span>
+              <span class="listhead__col listhead__col--del"></span>
+            </div>
+            <div class="listview">
+              <ul class="list" id="wish-list"></ul>
+              <p class="empty" id="wish-empty">No items. Somebody has to go first.</p>
+            </div>
+          </div>
+
+          <div class="statusbar">
+            <span class="statusbar__cell statusbar__cell--grow">
+              <span id="wish-count">0</span> item(s)
+            </span>
+            <span class="statusbar__cell">Snacks.txt</span>
           </div>
         </section>
 
         <!-- ============================================ TRANSPORT -->
-        <section class="win win--rides" id="transport" aria-labelledby="transport-heading">
-          <div class="win__bar">
-            <span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <h2 class="win__title" id="transport-heading">
-              <span aria-hidden="true">🚗</span> RIDESHARE.EXE
-            </h2>
-            <span class="count" id="ride-count">0</span>
+        <section class="win" id="transport" aria-labelledby="transport-heading">
+          <div class="titlebar">
+            <span class="titlebar__icon" aria-hidden="true">🚗</span>
+            <span class="titlebar__text" id="transport-heading">Rideshare</span>
+            <span class="titlebar__btns" aria-hidden="true">
+              <i class="tbtn">_</i><i class="tbtn">❒</i><i class="tbtn tbtn--x">✕</i>
+            </span>
+          </div>
+          <div class="menubar" aria-hidden="true">
+            <span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span>
+            <span><u>H</u>elp</span>
           </div>
 
-          <div class="win__body">
-            <p class="lead">
-              Got wheels? Offer seats. No wheels? Say so before you end up walking
-              along the canal.
-            </p>
+          <div class="client">
+            <fieldset class="group">
+              <legend>New entry</legend>
+              <p class="lead">
+                Got wheels? Offer seats. No wheels? Say so before you end up
+                walking along the canal.
+              </p>
 
-            <form id="ride-form" class="form" novalidate>
-              <fieldset class="segmented">
-                <legend class="sr-only">What kind of entry is this?</legend>
-                <label>
-                  <input type="radio" name="kind" value="offer" checked />
-                  <span><em aria-hidden="true">🚗</em> I'm driving</span>
-                </label>
-                <label>
-                  <input type="radio" name="kind" value="need" />
-                  <span><em aria-hidden="true">🙋</em> I need a lift</span>
-                </label>
-              </fieldset>
+              <form id="ride-form" class="form" novalidate>
+                <fieldset class="radios">
+                  <legend class="sr-only">What kind of entry is this?</legend>
+                  <label class="radio">
+                    <input type="radio" name="kind" value="offer" checked />
+                    <span>I'm driving</span>
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="kind" value="need" />
+                    <span>I need a lift</span>
+                  </label>
+                </fieldset>
 
-              <div class="field field--half">
-                <label for="ride-author">Your name</label>
-                <input
-                  id="ride-author"
-                  name="author"
-                  type="text"
-                  required
-                  maxlength="60"
-                  autocomplete="name"
-                  placeholder="your name"
-                />
-              </div>
+                <div class="field field--half">
+                  <label for="ride-author">Your name</label>
+                  <input
+                    id="ride-author"
+                    name="author"
+                    type="text"
+                    required
+                    maxlength="60"
+                    autocomplete="name"
+                    placeholder="your name"
+                  />
+                </div>
 
-              <div class="field field--half">
-                <label for="ride-seats" id="ride-seats-label">Free seats</label>
-                <input
-                  id="ride-seats"
-                  name="seats"
-                  type="number"
-                  min="1"
-                  max="20"
-                  step="1"
-                  value="1"
-                  required
-                />
-              </div>
+                <div class="field field--half">
+                  <label for="ride-seats" id="ride-seats-label">Free seats</label>
+                  <input
+                    id="ride-seats"
+                    name="seats"
+                    type="number"
+                    min="1"
+                    max="20"
+                    step="1"
+                    value="1"
+                    required
+                  />
+                </div>
 
-              <div class="field">
-                <label for="ride-pickup" id="ride-pickup-label">Pickup point</label>
-                <input
-                  id="ride-pickup"
-                  name="pickup"
-                  type="text"
-                  required
-                  maxlength="120"
-                  autocomplete="off"
-                  placeholder="e.g. the office, 1:30 pm sharp-ish"
-                />
-              </div>
+                <div class="field">
+                  <label for="ride-pickup" id="ride-pickup-label">Pickup point</label>
+                  <input
+                    id="ride-pickup"
+                    name="pickup"
+                    type="text"
+                    required
+                    maxlength="120"
+                    autocomplete="off"
+                    placeholder="e.g. the office, 1:30 pm sharp-ish"
+                  />
+                </div>
 
-              <div class="field">
-                <label for="ride-note">Notes <span class="opt">(optional)</span></label>
-                <input
-                  id="ride-note"
-                  name="note"
-                  type="text"
-                  maxlength="140"
-                  autocomplete="off"
-                  placeholder="e.g. my playlist is non-negotiable"
-                />
-              </div>
+                <div class="field">
+                  <label for="ride-note">Notes <span class="opt">(optional)</span></label>
+                  <input
+                    id="ride-note"
+                    name="note"
+                    type="text"
+                    maxlength="140"
+                    autocomplete="off"
+                    placeholder="e.g. my playlist is non-negotiable"
+                  />
+                </div>
 
-              <button class="glossy glossy--aqua btn" type="submit">
-                <span aria-hidden="true">🎉</span> Add me to the convoy
-              </button>
-              <p class="form__error" id="ride-error" role="alert" hidden></p>
-            </form>
+                <div class="form__actions">
+                  <button class="btn9 btn9--default" type="submit">
+                    Add entry
+                  </button>
+                </div>
+                <p class="form__error" id="ride-error" role="alert" hidden></p>
+              </form>
+            </fieldset>
 
             <div class="stats" id="ride-stats" hidden>
               <div class="stat">
-                <span class="stat__label">SEATS OFFERED</span>
+                <span class="stat__label">Seats offered</span>
                 <strong id="stat-offered">0</strong>
               </div>
               <div class="stat">
-                <span class="stat__label">SEATS WANTED</span>
+                <span class="stat__label">Seats wanted</span>
                 <strong id="stat-needed">0</strong>
               </div>
             </div>
 
-            <h3 class="sub">// DRIVERS</h3>
-            <ul class="list" id="offer-list"></ul>
-            <p class="empty" id="offer-empty">
-              No drivers yet. Somebody has to steer the land-boat.
-            </p>
+            <p class="sub">Drivers</p>
+            <div class="listview">
+              <ul class="list" id="offer-list"></ul>
+              <p class="empty" id="offer-empty">
+                No drivers yet. Somebody has to steer the land-boat.
+              </p>
+            </div>
 
-            <h3 class="sub">// LOOKING FOR A LIFT</h3>
-            <ul class="list" id="need-list"></ul>
-            <p class="empty" id="need-empty">
-              Nobody stranded so far. Suspicious, but good.
-            </p>
+            <p class="sub">Looking for a lift</p>
+            <div class="listview">
+              <ul class="list" id="need-list"></ul>
+              <p class="empty" id="need-empty">
+                Nobody stranded so far. Suspicious, but good.
+              </p>
+            </div>
+          </div>
+
+          <div class="statusbar">
+            <span class="statusbar__cell statusbar__cell--grow">
+              <span id="ride-count">0</span> entr(y/ies)
+            </span>
+            <span class="statusbar__cell">Rideshare.exe</span>
           </div>
         </section>
       </div>
+
+      <p class="deskfoot">
+        Lipsia Digital &nbsp;·&nbsp; Boat Day &nbsp;·&nbsp; Life jackets are not
+        optional, unlike the potato salad.
+      </p>
     </main>
 
-    <footer class="foot">
-      <p class="foot__counter">
-        <span aria-hidden="true">👁</span> VISITORS:
-        <span class="counter" aria-hidden="true">0000420</span>
-      </p>
-      <p><strong>LIPSIA DIGITAL</strong> ◆ BOAT DAY ◆ EST. 2026</p>
-      <p class="foot__small">
-        Made with 💦, sunscreen and deeply questionable rowing technique.
-        Life jackets are not optional, unlike the potato salad.
-      </p>
-      <p class="badges">
-        <span class="badge98">Made with Notepad</span>
-        <span class="badge98">Y2K READY</span>
-        <span class="badge98">🚧 Under construction</span>
-      </p>
-    </footer>
+    <!-- ============================================ TASKBAR -->
+    <div class="taskbar">
+      <button class="startbtn" id="start-btn" type="button" aria-expanded="false" aria-controls="start-menu">
+        <span class="flag" aria-hidden="true">
+          <i></i><i></i><i></i><i></i>
+        </span>
+        <span class="startbtn__label">Start</span>
+      </button>
 
-    <script src="config.js?v=5"></script>
-    <script src="app.js?v=5"></script>
+      <div class="taskbar__sep" aria-hidden="true"></div>
+
+      <div class="tasks">
+        <a class="taskbtn" href="#snacks"><span aria-hidden="true">🍕</span> Snacks and Sips</a>
+        <a class="taskbtn" href="#transport"><span aria-hidden="true">🚗</span> Rideshare</a>
+      </div>
+
+      <div class="tray">
+        <span aria-hidden="true">🔊</span>
+        <span aria-hidden="true">🖧</span>
+        <span class="tray__clock" id="clock">--:--</span>
+      </div>
+    </div>
+
+    <!-- start menu -->
+    <div class="startmenu" id="start-menu" hidden>
+      <div class="startmenu__rail" aria-hidden="true">
+        <span>Boat&nbsp;Day&nbsp;<b>Me</b></span>
+      </div>
+      <ul class="startmenu__list">
+        <li><a href="#snacks"><span aria-hidden="true">🍕</span> Snacks and Sips</a></li>
+        <li><a href="#transport"><span aria-hidden="true">🚗</span> Rideshare</a></li>
+        <li><a id="start-map-link" href="#" target="_blank" rel="noopener"><span aria-hidden="true">🌐</span> Open the map</a></li>
+        <li class="startmenu__hr" role="separator"></li>
+        <li><a href="#" data-noop="true"><span aria-hidden="true">🛟</span> Log Off Toni…</a></li>
+        <li><a href="#" data-noop="true"><span aria-hidden="true">⏻</span> Shut Down…</a></li>
+      </ul>
+    </div>
+
+    <script src="config.js?v=7"></script>
+    <script src="app.js?v=7"></script>
   </body>
 </html>
