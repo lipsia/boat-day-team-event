@@ -9,7 +9,7 @@
       name="description"
       content="Lipsia Digital Boat Day — claim your snacks, sort the carpool. Windows Millennium Edition."
     />
-    <link rel="stylesheet" href="styles.css?v=11" />
+    <link rel="stylesheet" href="styles.css?v=12" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>"
@@ -112,18 +112,46 @@
         </div>
       </section>
 
-      <!-- ============================================ TIP OF THE DAY -->
-      <section class="win win--tip" aria-label="Tip of the day">
+      <!-- ============================================ ASSISTANT -->
+      <section class="win win--clippy" aria-label="Office assistant">
         <div class="titlebar titlebar--inactive">
-          <span class="titlebar__icon" aria-hidden="true">💡</span>
-          <span class="titlebar__text">Tip of the Day</span>
+          <span class="titlebar__icon" aria-hidden="true">📎</span>
+          <span class="titlebar__text">Office Assistant</span>
           <span class="titlebar__btns" aria-hidden="true">
             <i class="tbtn">_</i><i class="tbtn">❒</i><i class="tbtn tbtn--x">✕</i>
           </span>
         </div>
-        <div class="tip">
-          <span class="tip__bulb" aria-hidden="true">💡</span>
-          <p class="tip__text"><span id="ticker-text">Did you know…</span></p>
+        <div class="clippy">
+          <p class="clippy__balloon" aria-live="polite">
+            <span id="ticker-text">Did you know…</span>
+          </p>
+
+          <!-- A paperclip, drawn rather than downloaded: one bent wire, two
+               eyes, a pair of eyebrows doing most of the acting. -->
+          <div class="clippy__figure">
+            <svg
+              class="clippy__svg"
+              viewBox="0 0 68 116"
+              role="img"
+              aria-label="A paperclip with eyes, watching you plan a boat trip"
+            >
+              <path
+                class="clippy__wire"
+                d="M26 78 L26 28 a14 14 0 0 1 28 0 L54 84 a20 20 0 0 1 -40 0 L14 40"
+              />
+              <ellipse class="clippy__eye" cx="33" cy="27" rx="7.5" ry="8" />
+              <ellipse class="clippy__eye" cx="48" cy="27" rx="7.5" ry="8" />
+              <!-- pupils sit left of centre, so he is reading his own balloon -->
+              <g class="clippy__pupils">
+                <circle cx="31.5" cy="28" r="3.2" />
+                <circle cx="46.5" cy="28" r="3.2" />
+              </g>
+              <g class="clippy__brows">
+                <path d="M27 13 L38 9" />
+                <path d="M44 9 L55 13" />
+              </g>
+            </svg>
+          </div>
         </div>
       </section>
 
@@ -433,7 +461,7 @@
       </ul>
     </div>
 
-    <script src="config.js?v=11"></script>
-    <script src="app.js?v=11"></script>
+    <script src="config.js?v=12"></script>
+    <script src="app.js?v=12"></script>
   </body>
 </html>
