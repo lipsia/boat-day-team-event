@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Team Event · Lipsia Digital</title>
+    <meta
+      name="description"
+      content="Team Event von Lipsia Digital am Bootsverleih in Leipzig — Essenswünsche eintragen und Mitfahrgelegenheiten organisieren."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>"
+    />
+  </head>
+  <body>
+    <div id="banner" class="banner" hidden></div>
+
+    <header class="hero">
+      <div class="hero__inner">
+        <p class="hero__eyebrow" id="event-company">Lipsia Digital</p>
+        <h1 class="hero__title" id="event-title">Team Event</h1>
+        <p class="hero__subtitle" id="event-subtitle">
+          Bootstour auf dem Leipziger Wasser
+        </p>
+        <p class="hero__date" id="event-date" hidden></p>
+
+        <div class="hero__meta">
+          <a class="pill" id="event-maps-link" href="#" target="_blank" rel="noopener">
+            <span aria-hidden="true">📍</span>
+            <span id="event-location">Bootsverleih in Leipzig</span>
+          </a>
+          <a class="pill pill--ghost" href="#essen">
+            <span aria-hidden="true">🍕</span> Essenswünsche
+          </a>
+          <a class="pill pill--ghost" href="#transport">
+            <span aria-hidden="true">🚗</span> Mitfahren
+          </a>
+        </div>
+      </div>
+      <div class="hero__wave" aria-hidden="true"></div>
+    </header>
+
+    <main class="wrap">
+      <!-- ------------------------------------------------ Treffpunkt -->
+      <section class="card card--map" aria-labelledby="map-heading">
+        <div class="card__head">
+          <h2 id="map-heading">Treffpunkt</h2>
+          <a
+            class="link"
+            id="event-maps-link-2"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            >In Google Maps öffnen ↗</a
+          >
+        </div>
+        <div class="map">
+          <iframe
+            id="map-frame"
+            title="Karte: Bootsverleih in Leipzig"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </section>
+
+      <div class="columns">
+        <!-- ------------------------------------------------ Essen -->
+        <section class="card" id="essen" aria-labelledby="essen-heading">
+          <div class="card__head">
+            <h2 id="essen-heading"><span aria-hidden="true">🍕</span> Essen &amp; Trinken</h2>
+            <span class="count" id="wish-count">0</span>
+          </div>
+          <p class="card__lead">
+            Was soll mit an Bord? Trag deinen Wunsch ein — jeder Wunsch gehört
+            zu einer Person.
+          </p>
+
+          <form id="wish-form" class="form" novalidate>
+            <div class="field">
+              <label for="wish-name">Was?</label>
+              <input
+                id="wish-name"
+                name="item"
+                type="text"
+                required
+                maxlength="80"
+                autocomplete="off"
+                placeholder="z. B. Vegetarische Wraps"
+              />
+            </div>
+
+            <div class="field field--half">
+              <label for="wish-amount">Menge</label>
+              <input
+                id="wish-amount"
+                name="amount"
+                type="text"
+                required
+                maxlength="40"
+                autocomplete="off"
+                placeholder="z. B. 2 Bleche"
+              />
+            </div>
+
+            <div class="field field--half">
+              <label for="wish-author">Von wem?</label>
+              <input
+                id="wish-author"
+                name="author"
+                type="text"
+                required
+                maxlength="60"
+                autocomplete="name"
+                placeholder="Dein Name"
+              />
+            </div>
+
+            <button class="btn" type="submit">Wunsch hinzufügen</button>
+            <p class="form__error" id="wish-error" role="alert" hidden></p>
+          </form>
+
+          <ul class="list" id="wish-list"></ul>
+          <p class="empty" id="wish-empty">Noch keine Wünsche eingetragen.</p>
+        </section>
+
+        <!-- ------------------------------------------------ Transport -->
+        <section class="card" id="transport" aria-labelledby="transport-heading">
+          <div class="card__head">
+            <h2 id="transport-heading"><span aria-hidden="true">🚗</span> Mitfahrgelegenheiten</h2>
+            <span class="count" id="ride-count">0</span>
+          </div>
+          <p class="card__lead">
+            Biete freie Plätze an oder sag, dass du eine Mitfahrgelegenheit
+            brauchst.
+          </p>
+
+          <form id="ride-form" class="form" novalidate>
+            <fieldset class="segmented">
+              <legend class="sr-only">Art des Eintrags</legend>
+              <label>
+                <input type="radio" name="kind" value="offer" checked />
+                <span>Ich biete eine Mitfahrgelegenheit</span>
+              </label>
+              <label>
+                <input type="radio" name="kind" value="need" />
+                <span>Ich suche eine Mitfahrgelegenheit</span>
+              </label>
+            </fieldset>
+
+            <div class="field field--half">
+              <label for="ride-author">Von wem?</label>
+              <input
+                id="ride-author"
+                name="author"
+                type="text"
+                required
+                maxlength="60"
+                autocomplete="name"
+                placeholder="Dein Name"
+              />
+            </div>
+
+            <div class="field field--half">
+              <label for="ride-seats" id="ride-seats-label">Plätze</label>
+              <input
+                id="ride-seats"
+                name="seats"
+                type="number"
+                min="1"
+                max="20"
+                step="1"
+                value="1"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="ride-pickup" id="ride-pickup-label">Treffpunkt</label>
+              <input
+                id="ride-pickup"
+                name="pickup"
+                type="text"
+                required
+                maxlength="120"
+                autocomplete="off"
+                placeholder="z. B. Büro, 13:30"
+              />
+            </div>
+
+            <div class="field">
+              <label for="ride-note">Notiz <span class="opt">(optional)</span></label>
+              <input
+                id="ride-note"
+                name="note"
+                type="text"
+                maxlength="140"
+                autocomplete="off"
+                placeholder="z. B. Rückfahrt auch möglich"
+              />
+            </div>
+
+            <button class="btn" type="submit">Eintrag hinzufügen</button>
+            <p class="form__error" id="ride-error" role="alert" hidden></p>
+          </form>
+
+          <div class="stats" id="ride-stats" hidden>
+            <div class="stat">
+              <strong id="stat-offered">0</strong><span>Plätze angeboten</span>
+            </div>
+            <div class="stat">
+              <strong id="stat-needed">0</strong><span>Plätze gesucht</span>
+            </div>
+          </div>
+
+          <h3 class="sub">Angebote</h3>
+          <ul class="list" id="offer-list"></ul>
+          <p class="empty" id="offer-empty">Noch keine Angebote.</p>
+
+          <h3 class="sub">Gesuche</h3>
+          <ul class="list" id="need-list"></ul>
+          <p class="empty" id="need-empty">Noch keine Gesuche.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <p>Lipsia Digital · Team Event</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
