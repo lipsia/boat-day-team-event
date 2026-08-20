@@ -124,6 +124,13 @@
     );
   }
 
+  /* Feld per Name holen. Wichtig: form.elements.item liefert die
+     eingebaute item()-Methode der Collection, nicht das Input-Feld —
+     namedItem() umgeht diese Kollision (auch bei "length", "namedItem"). */
+  function field(form, name) {
+    return form.elements.namedItem(name);
+  }
+
   function setError(el, message) {
     el.textContent = message || "";
     el.hidden = !message;
@@ -132,12 +139,16 @@
   function validate(form, fields) {
     var missing = null;
     fields.forEach(function (name) {
-      var input = form.elements[name];
+      var input = field(form, name);
+      if (!input) return;
       var empty = !String(input.value || "").trim();
-      input.setAttribute("aria-invalid", empty ? "true" : "false");
+      /* Radio-Gruppen liefern eine RadioNodeList ohne setAttribute/focus */
+      if (input.setAttribute) {
+        input.setAttribute("aria-invalid", empty ? "true" : "false");
+      }
       if (empty && !missing) missing = input;
     });
-    if (missing) missing.focus();
+    if (missing && missing.focus) missing.focus();
     return !missing;
   }
 
@@ -282,14 +293,14 @@
   /* Formular-Beschriftungen an "biete/suche" anpassen */
   function syncRideForm() {
     var form = $("ride-form");
-    var isOffer = form.elements.kind.value === "offer";
+    var isOffer = field(form, "kind").value === "offer";
     $("ride-seats-label").textContent = isOffer
       ? "Freie Plätze"
       : "Wie viele Personen?";
     $("ride-pickup-label").textContent = isOffer
       ? "Treffpunkt / Abfahrtsort"
       : "Wo möchtest du abgeholt werden?";
-    form.elements.pickup.placeholder = isOffer
+    field(form, "pickup").placeholder = isOffer
       ? "z. B. Büro Lipsia Digital, 13:30"
       : "z. B. Hauptbahnhof Ostseite";
   }
@@ -334,17 +345,17 @@
       submitting(form, true);
       store
         .insert("wishes", {
-          item: form.elements.item.value.trim(),
-          amount: form.elements.amount.value.trim(),
-          author: form.elements.author.value.trim(),
+          item: field(form, "item").value.trim(),
+          amount: field(form, "amount").value.trim(),
+          author: field(form, "author").value.trim(),
         })
         .then(function (row) {
           wishes.push(row);
           renderWishes();
-          var author = form.elements.author.value;
+          var author = field(form, "author").value;
           form.reset();
-          form.elements.author.value = author; /* Name merken */
-          form.elements.item.focus();
+          field(form, "author").value = author; /* Name merken */
+          field(form, "item").focus();
         })
         .catch(function (err) {
           setError(errorEl, "Speichern fehlgeschlagen: " + err.message);
@@ -370,25 +381,25 @@
         return;
       }
 
-      var seats = Math.max(1, Math.min(20, parseInt(form.elements.seats.value, 10) || 1));
+      var seats = Math.max(1, Math.min(20, parseInt(field(form, "seats").value, 10) || 1));
 
       submitting(form, true);
       store
         .insert("rides", {
-          kind: form.elements.kind.value,
-          author: form.elements.author.value.trim(),
+          kind: field(form, "kind").value,
+          author: field(form, "author").value.trim(),
           seats: seats,
-          pickup: form.elements.pickup.value.trim(),
-          note: form.elements.note.value.trim() || null,
+          pickup: field(form, "pickup").value.trim(),
+          note: field(form, "note").value.trim() || null,
         })
         .then(function (row) {
           rides.push(row);
           renderRides();
-          var author = form.elements.author.value;
-          var kind = form.elements.kind.value;
+          var author = field(form, "author").value;
+          var kind = field(form, "kind").value;
           form.reset();
-          form.elements.author.value = author;
-          form.elements.kind.value = kind;
+          field(form, "author").value = author;
+          field(form, "kind").value = kind;
           syncRideForm();
         })
         .catch(function (err) {
