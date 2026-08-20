@@ -938,6 +938,159 @@ input[aria-invalid="true"] {
   border: 0;
 }
 
+/* ==================================================== Boot sequence
+   Timeline (all CSS, so it self-clears without JS):
+     0.00-1.20s  BIOS POST lines type in
+     1.20s       POST out, ME-style splash fades in
+     1.40s       progress bar starts sweeping
+     3.60s       whole overlay fades out, gone by ~4.15s
+   JS only adds skip-on-click and once-per-session behaviour. */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #000;
+  color: #c9c9c9;
+  font-family: var(--mono);
+  overflow: hidden;
+  animation: boot-off 0.55s ease 3.6s forwards;
+}
+@keyframes boot-off {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.boot__post {
+  padding: 26px 22px;
+  font-size: 16px;
+  line-height: 1.55;
+  animation: boot-fade-out 0.01s linear 1.2s forwards;
+}
+@keyframes boot-fade-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.boot__post p {
+  margin: 0;
+  opacity: 0;
+  animation: boot-line 0.01s linear forwards;
+}
+.boot__post p:nth-child(1) { animation-delay: 0.05s; }
+.boot__post p:nth-child(2) { animation-delay: 0.22s; }
+.boot__post p:nth-child(3) { animation-delay: 0.39s; }
+.boot__post p:nth-child(4) { animation-delay: 0.56s; }
+.boot__post p:nth-child(5) { animation-delay: 0.73s; }
+.boot__post p:nth-child(6) { animation-delay: 0.90s; }
+.boot__post p:nth-child(7) { animation-delay: 1.05s; }
+@keyframes boot-line {
+  to {
+    opacity: 1;
+  }
+}
+
+.boot__splash {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  padding: 20px;
+  background: linear-gradient(180deg, #05224e 0%, #0d4f96 58%, #3b8fcd 100%);
+  opacity: 0;
+  animation: boot-splash-in 0.5s ease 1.2s forwards;
+}
+@keyframes boot-splash-in {
+  to {
+    opacity: 1;
+  }
+}
+
+.boot__logo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+/* the four-pane flag again, scaled up for the splash */
+.boot__flag {
+  position: relative;
+  display: block;
+  width: 66px;
+  height: 58px;
+  flex-shrink: 0;
+  transform: skewY(-9deg);
+}
+.boot__flag::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 29px;
+  height: 25px;
+  background: #ff3b30;
+  box-shadow: 35px 0 0 #4cd964, 0 31px 0 #007aff, 35px 31px 0 #ffcc00;
+}
+.boot__wordmark {
+  display: block;
+  color: #fff;
+  font-family: var(--ui);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.55);
+}
+.boot__brand {
+  display: block;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 1.05;
+}
+.boot__edition {
+  display: block;
+  font-size: 15px;
+}
+
+.boot__barwrap {
+  width: min(330px, 62vw);
+  height: 17px;
+  padding: 2px;
+  background: #06203f;
+  box-shadow: inset 1px 1px 0 #041732, inset -1px -1px 0 #3c86c2;
+  overflow: hidden;
+}
+.boot__bar {
+  height: 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #6fbdf2 32%,
+    #dff2ff 50%,
+    #6fbdf2 68%,
+    transparent 100%
+  );
+  background-size: 45% 100%;
+  background-repeat: no-repeat;
+  animation: boot-bar 1.2s linear 1.4s infinite;
+}
+@keyframes boot-bar {
+  from {
+    background-position: -50% 0;
+  }
+  to {
+    background-position: 150% 0;
+  }
+}
+
+.boot__hint {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--ui);
+  font-size: 11px;
+}
+
 /* ==================================================== Motion off */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -949,5 +1102,10 @@ input[aria-invalid="true"] {
   }
   html {
     scroll-behavior: auto;
+  }
+  /* the global rule above only shortens animations; the boot overlay has a
+     delay too, so hide it outright instead of flashing it */
+  .boot {
+    display: none !important;
   }
 }

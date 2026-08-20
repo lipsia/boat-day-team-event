@@ -227,6 +227,42 @@
     }, 9000);
   }
 
+  /* ---------------------------------------------------- Boot screen
+
+     The overlay clears itself via CSS, so this only adds the niceties:
+     click or any key skips it, and it plays once per browser session so
+     it does not get tedious for people checking the list repeatedly.
+     Append ?boot to the URL to watch it again. */
+  function bootScreen() {
+    var boot = $("boot");
+    if (!boot) return;
+
+    var dismiss = function () {
+      boot.hidden = true;
+    };
+
+    var replay = window.location.search.indexOf("boot") !== -1;
+    if (!replay) {
+      try {
+        if (sessionStorage.getItem("ld-booted")) {
+          dismiss();
+          return;
+        }
+        sessionStorage.setItem("ld-booted", "1");
+      } catch (e) {
+        /* private mode / storage disabled — just play it */
+      }
+    }
+
+    /* belt and braces: never let the overlay outlive its animation */
+    setTimeout(dismiss, 5000);
+    boot.addEventListener("click", dismiss);
+    document.addEventListener("keydown", function onKey() {
+      dismiss();
+      document.removeEventListener("keydown", onKey);
+    });
+  }
+
   /* ---------------------------------------------------- Desktop chrome */
 
   /* Taskbar clock, in the user's locale, ticking every 15s. */
@@ -472,6 +508,7 @@
   }
 
   function init() {
+    bootScreen();
     renderEvent();
     startClock();
     startMenu();

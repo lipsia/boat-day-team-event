@@ -63,9 +63,9 @@ file for up to ten minutes. Bump the version query in `index.html` so nobody
 has to clear a cache:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=9" />
-<script src="config.js?v=9"></script>
-<script src="app.js?v=9"></script>
+<link rel="stylesheet" href="styles.css?v=10" />
+<script src="config.js?v=10"></script>
+<script src="app.js?v=10"></script>
 ```
 
 To check which version your own browser has, in the console:
@@ -128,3 +128,13 @@ there, or clear everything out after the event.
   with `box-shadow` and `border: 0` makes the line run straight through the
   caption text. The legend also carries an opaque background so the frame
   cannot show through descenders.
+
+## The boot screen
+
+On the first visit of a browser session the page plays a short BIOS-then-splash
+boot sequence (about 4 seconds). Click or press any key to skip it; it will not
+play again until a new session. Append `?boot` to the URL to watch it again.
+
+The timeline lives entirely in CSS, so the overlay clears itself even if
+`app.js` fails to run — a broken script can never leave the page covered.
+`prefers-reduced-motion` skips it outright.

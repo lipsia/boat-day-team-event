@@ -9,14 +9,41 @@
       name="description"
       content="Lipsia Digital Boat Day — claim your snacks, sort the carpool. Windows Millennium Edition."
     />
-    <link rel="stylesheet" href="styles.css?v=9" />
+    <link rel="stylesheet" href="styles.css?v=10" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>"
     />
   </head>
   <body>
-    <!-- ============================================ DESKTOP ICONS -->
+    <!-- ============================================ BOOT SEQUENCE
+       Pure-CSS timeline: it fades itself out even if JS never runs,
+       so a script error can never leave the page covered. -->
+  <div class="boot" id="boot">
+    <div class="boot__post" aria-hidden="true">
+      <p>Lipsia Digital BIOS v2.26</p>
+      <p>Memory Test : 65536K OK</p>
+      <p>Detecting IDE drives .......... OK</p>
+      <p>Detecting snacks .............. OK</p>
+      <p>Detecting designated drivers .. OK</p>
+      <p>Boat controller ............... READY</p>
+      <p>Starting Boat Day...</p>
+    </div>
+
+    <div class="boot__splash" aria-hidden="true">
+      <div class="boot__logo">
+        <span class="boot__flag"></span>
+        <span class="boot__wordmark">
+          <span class="boot__brand">Boat Day</span>
+          <span class="boot__edition">Millennium Edition</span>
+        </span>
+      </div>
+      <div class="boot__barwrap"><div class="boot__bar"></div></div>
+      <p class="boot__hint">Click anywhere to skip</p>
+    </div>
+  </div>
+
+  <!-- ============================================ DESKTOP ICONS -->
     <div class="desk-icons">
       <span class="deskicon" aria-hidden="true">
         <span class="deskicon__img">🖥️</span>
@@ -383,7 +410,7 @@
 
       <div class="tray">
         <span aria-hidden="true">🔊</span>
-        <span aria-hidden="true">🖧</span>
+        <span aria-hidden="true">📶</span>
         <span class="tray__clock" id="clock">--:--</span>
       </div>
     </div>
@@ -403,7 +430,7 @@
       </ul>
     </div>
 
-    <script src="config.js?v=9"></script>
-    <script src="app.js?v=9"></script>
+    <script src="config.js?v=10"></script>
+    <script src="app.js?v=10"></script>
   </body>
 </html>
