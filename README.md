@@ -90,3 +90,25 @@ python3 -m http.server 8000
 
 Im Supabase-Dashboard unter **Table Editor** → `wishes` / `rides`. Dort lassen
 sich Einträge auch exportieren (CSV) oder nach dem Event alle löschen.
+
+## Nach Änderungen an app.js / config.js
+
+GitHub Pages liefert Dateien mit `cache-control: max-age=600` aus — Browser
+halten also bis zu 10 Minuten die alte Version. Damit Änderungen sofort
+ankommen, die Versionsnummer in `index.html` erhöhen:
+
+```html
+<script src="config.js?v=3"></script>
+<script src="app.js?v=3"></script>
+```
+
+Der geänderte Dateiname erzwingt einen Neuabruf, ohne dass jemand den
+Cache leeren muss.
+
+Zum Prüfen, welche Version der eigene Browser hat (Konsole öffnen):
+
+```js
+fetch('app.js', { cache: 'reload' })
+  .then(r => r.text())
+  .then(t => console.log(t.includes('namedItem') ? 'aktuell' : 'veraltet'));
+```
