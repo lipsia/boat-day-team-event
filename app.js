@@ -217,20 +217,93 @@
     "You cannot dismiss me. Nobody ever could.",
   ];
 
-  function startTicker() {
-    var el = $("ticker-text");
-    if (!el) return;
-    /* start index from the current minute, so it does not jump around */
-    var i = new Date().getMinutes() % TICKER_LINES.length;
-    el.textContent = TICKER_LINES[i];
-    setInterval(function () {
-      i = (i + 1) % TICKER_LINES.length;
-      el.style.animation = "none";
-      el.textContent = TICKER_LINES[i];
-      /* force a reflow so the fade-in animation restarts */
-      void el.offsetWidth;
-      el.style.animation = "";
-    }, 9000);
+  /* ---------------------------------------------------- Office assistant
+
+     The real Clippy, via clippyjs (github.com/pithings/clippy), pulled off
+     a CDN as an ES module so there is still no build step and nothing to
+     vendor. He is about 1.3 MB of sprite sheet, which is roughly twenty
+     times the rest of the site, so he is fetched lazily and never holds up
+     first paint. If the CDN is blocked or the user is offline the page
+     simply carries on without him.
+
+     His mp3 pack is deliberately not loaded — the boot chime stays the only
+     sound in the app. */
+
+  var CLIPPY_CDN = "https://cdn.jsdelivr.net/npm/clippyjs@0.1.0/dist/";
+
+  /* the agent, once he has landed; the shutdown line talks through him */
+  var clippy = null;
+
+  /* Everything he says goes through here, so the sr-only live region stays
+     in step with the balloon. */
+  function say(text) {
+    if (!clippy) return;
+    clippy.speak(text);
+    var live = $("assistant-say");
+    if (live) live.textContent = text;
+  }
+
+  function loadClippy() {
+    return Promise.all([
+      import(CLIPPY_CDN + "index.mjs"),
+      import(CLIPPY_CDN + "agents/clippy/index.mjs"),
+    ]).then(function (mods) {
+      var loaders = mods[1].default;
+      return mods[0].initAgent({
+        agent: loaders.agent,
+        map: loaders.map,
+        /* skip sounds-mp3.mjs; initAgent only wants a default export here */
+        sound: function () {
+          return Promise.resolve({ default: {} });
+        },
+      });
+    });
+  }
+
+  /* The boot overlay sits above everything, and the agent parks itself at
+     z-index 10001 — so hold him back until the overlay has gone. */
+  function whenBooted(done) {
+    var boot = $("boot");
+    if (!boot || boot.hidden) return done();
+    var obs = new MutationObserver(function () {
+      if (!boot.hidden) return;
+      obs.disconnect();
+      done();
+    });
+    obs.observe(boot, { attributes: true, attributeFilter: ["hidden"] });
+  }
+
+  function startAssistant() {
+    loadClippy()
+      .then(function (agent) {
+        whenBooted(function () {
+          clippy = agent;
+          agent.show();
+          /* bottom right, clear of the taskbar. He is draggable from there,
+             and the library clamps him back on screen when the window
+             resizes, so this is the only placement we do. */
+          agent.moveTo(
+            Math.max(24, window.innerWidth - 180),
+            Math.max(24, window.innerHeight - 190),
+            0
+          );
+
+          /* start on the current minute, so he does not restart the list
+             from the top on every reload */
+          var i = new Date().getMinutes() % TICKER_LINES.length;
+          say(TICKER_LINES[i]);
+          setInterval(function () {
+            i = (i + 1) % TICKER_LINES.length;
+            /* every fourth line, do something with his hands first —
+               more often than that and the action queue backs up */
+            if (i % 4 === 0) agent.animate();
+            say(TICKER_LINES[i]);
+          }, 10000);
+        });
+      })
+      .catch(function () {
+        /* offline, blocked, or the CDN moved: no assistant, no error */
+      });
   }
 
   /* ---------------------------------------------------- Sounds
@@ -489,8 +562,10 @@
       if (!link) return;
       if (link.hasAttribute("data-noop")) {
         event.preventDefault();
-        var tip = $("ticker-text");
-        if (tip) tip.textContent = "It is now safe to turn off your computer.";
+        if (clippy) {
+          clippy.stop();
+          say("It is now safe to turn off your computer.");
+        }
       }
       open(false);
     });
@@ -688,7 +763,7 @@
     renderEvent();
     startClock();
     startMenu();
-    startTicker();
+    startAssistant();
     renderWishes();
     renderRides();
     syncRideForm();
