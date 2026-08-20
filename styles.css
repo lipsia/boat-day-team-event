@@ -443,15 +443,24 @@ a.deskicon:focus-visible {
 }
 
 /* ==================================================== Group box + form */
+/* Win9x group box: a 1px engraved frame with a notch for the caption.
+   This needs a REAL border — a browser only cuts the notch for <legend>
+   when the fieldset has one. Drawing the frame with box-shadow instead
+   makes the line run straight through the caption text. The second
+   engraved line comes from the inset shadow. */
 .group {
   margin: 0 0 12px;
-  padding: 12px 11px 11px;
-  border: 0;
-  box-shadow: inset 1px 1px 0 var(--face-lo), inset -1px -1px 0 var(--face-hi),
-    inset 2px 2px 0 var(--face-hi), inset -2px -2px 0 var(--face-lo);
+  padding: 9px 11px 11px;
+  border: 1px solid;
+  border-color: var(--face-lo) var(--face-hi) var(--face-hi) var(--face-lo);
+  box-shadow: inset 1px 1px 0 var(--face-hi), inset -1px -1px 0 var(--face-lo);
 }
 .group > legend {
-  padding: 0 4px;
+  margin-left: 2px;
+  padding: 0 5px;
+  /* opaque, so the frame line cannot show through the descenders */
+  background: var(--face);
+  color: #000;
   font-size: 11px;
 }
 

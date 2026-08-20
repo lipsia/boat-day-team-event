@@ -442,11 +442,11 @@
     var form = $("ride-form");
     var isOffer = field(form, "kind").value === "offer";
     $("ride-seats-label").textContent = isOffer
-      ? "Free seats 💺"
-      : "How many of you? 🙋";
+      ? "Free seats"
+      : "How many of you?";
     $("ride-pickup-label").textContent = isOffer
-      ? "Where are you leaving from? 📍"
-      : "Where should we grab you? 📍";
+      ? "Where are you leaving from?"
+      : "Where should we pick you up?";
     field(form, "pickup").placeholder = isOffer
       ? "e.g. the office, 1:30 pm sharp-ish"
       : "e.g. Hauptbahnhof, east side";

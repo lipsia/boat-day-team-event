@@ -63,9 +63,9 @@ file for up to ten minutes. Bump the version query in `index.html` so nobody
 has to clear a cache:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=8" />
-<script src="config.js?v=8"></script>
-<script src="app.js?v=8"></script>
+<link rel="stylesheet" href="styles.css?v=9" />
+<script src="config.js?v=9"></script>
+<script src="app.js?v=9"></script>
 ```
 
 To check which version your own browser has, in the console:
@@ -123,3 +123,8 @@ there, or clear everything out after the event.
   elements render anyway — an empty error bar under the submit button, the
   stats panel showing zeroes. jsdom does **not** reproduce this cascade, so it
   cannot be caught by a DOM test; keep the guard.
+- **Group boxes need a real `border`.** A browser only cuts the notch for a
+  `<legend>` when its `<fieldset>` has an actual border. Drawing the frame
+  with `box-shadow` and `border: 0` makes the line run straight through the
+  caption text. The legend also carries an opaque background so the frame
+  cannot show through descenders.
