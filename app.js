@@ -227,6 +227,188 @@
     }, 9000);
   }
 
+  /* ---------------------------------------------------- Sounds
+
+     Everything is synthesised with the Web Audio API — no audio files in
+     the repo, and no reuse of Microsoft's actual sounds. Browsers refuse
+     to start audio before a user gesture, so the context is created on
+     the first click or keypress; the startup chime plays then, if the
+     boot screen is still up. The tray speaker mutes and unmutes, and the
+     choice is remembered. */
+  var Sound = (function () {
+    var ctx = null;
+    var muted = false;
+    try {
+      muted = localStorage.getItem("ld-muted") === "1";
+    } catch (e) {
+      /* storage disabled — default to audible */
+    }
+
+    function context() {
+      if (ctx) return ctx;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try {
+        ctx = new AC();
+      } catch (e) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    /* one enveloped oscillator; everything below is built from these */
+    function voice(o) {
+      var c = context();
+      if (!c) return;
+      var t0 = c.currentTime + (o.delay || 0);
+      var dur = o.dur;
+      var osc = c.createOscillator();
+      var gain = c.createGain();
+      var filter = c.createBiquadFilter();
+
+      filter.type = "lowpass";
+      filter.frequency.value = o.cutoff || 7000;
+      osc.type = o.type || "sine";
+      osc.frequency.setValueAtTime(o.from, t0);
+      if (o.to) osc.frequency.exponentialRampToValueAtTime(o.to, t0 + dur);
+
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(o.gain || 0.07, t0 + (o.attack || 0.012));
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(c.destination);
+      osc.start(t0);
+      osc.stop(t0 + dur + 0.04);
+    }
+
+    var RECIPES = {
+      /* rising major arpeggio with an octave-down pad underneath */
+      startup: function () {
+        [523.25, 659.25, 783.99, 1046.5].forEach(function (f, i) {
+          voice({ from: f, type: "sine", dur: 1.5 - i * 0.14, gain: 0.07, delay: i * 0.13, attack: 0.05 });
+          voice({ from: f / 2, type: "triangle", dur: 1.2, gain: 0.026, delay: i * 0.13, attack: 0.09 });
+        });
+      },
+      click: function () {
+        voice({ from: 1250, to: 680, type: "square", dur: 0.035, gain: 0.03, cutoff: 2400 });
+      },
+      menu: function () {
+        voice({ from: 680, to: 920, type: "triangle", dur: 0.09, gain: 0.045 });
+      },
+      /* two-note bell for a saved entry */
+      ding: function () {
+        voice({ from: 880, type: "sine", dur: 0.42, gain: 0.08 });
+        voice({ from: 1318.5, type: "sine", dur: 0.5, gain: 0.045, delay: 0.06 });
+      },
+      /* descending two-tone, the shape of every error dialog ever */
+      error: function () {
+        voice({ from: 330, type: "triangle", dur: 0.17, gain: 0.085, cutoff: 1800 });
+        voice({ from: 247, type: "triangle", dur: 0.3, gain: 0.085, delay: 0.17, cutoff: 1800 });
+      },
+      /* downward swoosh for throwing something away */
+      trash: function () {
+        voice({ from: 620, to: 90, type: "sawtooth", dur: 0.3, gain: 0.045, cutoff: 1500 });
+      },
+    };
+
+    function play(name) {
+      if (muted) return;
+      var c = context();
+      /* still blocked by the autoplay policy — stay silent rather than throw */
+      if (!c || c.state === "suspended") return;
+      var recipe = RECIPES[name];
+      if (!recipe) return;
+      try {
+        recipe();
+      } catch (e) {
+        /* audio is a nicety; never let it break the page */
+      }
+    }
+
+    function setMuted(next) {
+      muted = next;
+      try {
+        localStorage.setItem("ld-muted", muted ? "1" : "0");
+      } catch (e) {
+        /* ignore */
+      }
+      var icon = $("sound-icon");
+      var btn = $("sound-toggle");
+      if (icon) icon.textContent = muted ? "🔇" : "🔊";
+      if (btn) {
+        btn.setAttribute("aria-pressed", muted ? "false" : "true");
+        var label = btn.querySelector(".sr-only");
+        if (label) label.textContent = muted ? "Turn sounds on" : "Turn sounds off";
+      }
+    }
+
+    /* create/resume the context on the first gesture the browser gives us */
+    function arm(onUnlock) {
+      var unlock = function () {
+        var c = context();
+        if (!c) return;
+        if (c.state === "suspended" && c.resume) {
+          c.resume().then(function () {
+            if (onUnlock) onUnlock();
+          }, function () {});
+        } else if (onUnlock) {
+          onUnlock();
+        }
+        document.removeEventListener("pointerdown", unlock, true);
+        document.removeEventListener("keydown", unlock, true);
+      };
+      document.addEventListener("pointerdown", unlock, true);
+      document.addEventListener("keydown", unlock, true);
+    }
+
+    return {
+      play: play,
+      arm: arm,
+      isMuted: function () {
+        return muted;
+      },
+      toggle: function () {
+        setMuted(!muted);
+        play("click");
+      },
+      sync: function () {
+        setMuted(muted);
+      },
+    };
+  })();
+
+  /* Wire the speaker in the tray, arm the audio context, and give the
+     chrome its click sounds. */
+  function soundUi() {
+    Sound.sync();
+
+    var btn = $("sound-toggle");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        Sound.toggle();
+      });
+    }
+
+    Sound.arm(function () {
+      var boot = $("boot");
+      /* only greet you if the boot screen is actually still on screen */
+      if (boot && !boot.hidden) Sound.play("startup");
+    });
+
+    /* a soft click for anything that looks like a control */
+    document.addEventListener(
+      "pointerdown",
+      function (event) {
+        if (event.target.closest(".btn9, .taskbtn, .startbtn, .del, .deskicon, .startmenu a, .tbtn")) {
+          Sound.play("click");
+        }
+      },
+      true
+    );
+  }
+
   /* ---------------------------------------------------- Boot screen
 
      The overlay clears itself via CSS, so this only adds the niceties:
@@ -294,7 +476,9 @@
 
     btn.addEventListener("click", function (event) {
       event.stopPropagation();
-      open(menu.hidden);
+      var opening = menu.hidden;
+      open(opening);
+      if (opening) Sound.play("menu");
     });
 
     document.addEventListener("click", function (event) {
@@ -508,6 +692,7 @@
   }
 
   function init() {
+    soundUi();
     bootScreen();
     renderEvent();
     startClock();
@@ -526,6 +711,7 @@
 
       if (!validate(form, ["item", "amount", "author"])) {
         setError(errorEl, "Every field, please — snacks need an owner. 🍽️");
+        Sound.play("error");
         return;
       }
 
@@ -539,6 +725,7 @@
         .then(function (row) {
           wishes.push(row);
           renderWishes();
+          Sound.play("ding");
           var author = field(form, "author").value;
           form.reset();
           field(form, "author").value = author; /* keep the name for the next entry */
@@ -565,6 +752,7 @@
 
       if (!validate(form, ["author", "seats", "pickup"])) {
         setError(errorEl, "Need a name, a seat count and a pickup point. 🚗");
+        Sound.play("error");
         return;
       }
 
@@ -582,6 +770,7 @@
         .then(function (row) {
           rides.push(row);
           renderRides();
+          Sound.play("ding");
           var author = field(form, "author").value;
           var kind = field(form, "kind").value;
           form.reset();
@@ -613,6 +802,7 @@
           var keep = function (r) {
             return String(r.id) !== String(id);
           };
+          Sound.play("trash");
           if (table === "wishes") {
             wishes = wishes.filter(keep);
             renderWishes();

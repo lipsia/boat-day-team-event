@@ -860,6 +860,25 @@ input[aria-invalid="true"] {
   font-size: 12px;
   box-shadow: inset 1px 1px 0 var(--face-lo), inset -1px -1px 0 var(--face-hi);
 }
+/* the tray speaker is a real control, but must look like the other icons */
+.trayicon {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 2px;
+  background: none;
+  border: 1px solid transparent;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+.trayicon:hover {
+  border-color: var(--face-lo);
+}
+.trayicon:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: 1px;
+}
+
 .tray__clock {
   font-size: 11px;
   font-variant-numeric: tabular-nums;

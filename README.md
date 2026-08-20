@@ -63,9 +63,9 @@ file for up to ten minutes. Bump the version query in `index.html` so nobody
 has to clear a cache:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=10" />
-<script src="config.js?v=10"></script>
-<script src="app.js?v=10"></script>
+<link rel="stylesheet" href="styles.css?v=11" />
+<script src="config.js?v=11"></script>
+<script src="app.js?v=11"></script>
 ```
 
 To check which version your own browser has, in the console:
@@ -138,3 +138,16 @@ play again until a new session. Append `?boot` to the URL to watch it again.
 The timeline lives entirely in CSS, so the overlay clears itself even if
 `app.js` fails to run — a broken script can never leave the page covered.
 `prefers-reduced-motion` skips it outright.
+
+## Sounds
+
+Startup chime, button clicks, a ding when an entry saves, a two-tone error,
+and a swoosh when something is deleted. All of it is synthesised at runtime
+with the Web Audio API — there are no audio files in the repo, and none of
+Microsoft's actual sounds are reused.
+
+The speaker in the system tray mutes and unmutes; the choice is kept in
+`localStorage`. Browsers refuse to start audio before a user gesture, so the
+context is created on the first click or keypress — that is when the startup
+chime plays, if the boot screen is still up. If `AudioContext` is missing or
+blocked, every `Sound.play()` is a no-op and nothing breaks.
