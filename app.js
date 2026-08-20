@@ -195,16 +195,18 @@
   /* ---------------------------------------------------- Fun ticker */
 
   var TICKER_LINES = [
-    "Rule #1: the person holding the snacks decides the route.",
-    "Sunscreen is not a personality trait, but it is a requirement.",
-    "Nobody has ever regretted bringing too many grapes.",
-    "The lake is not a spreadsheet. You cannot sort it.",
-    "Standup is cancelled. Standing up in the boat also is.",
-    "Leipzig has more water than you think. Respect it.",
-    "Bring a jumper. The sun clocks off earlier than you do.",
-    "If the potato salad has been warm since noon, let it go.",
-    "Whoever forgets the bottle opener rows back alone.",
-    "Yes, someone will fall in. No, we are not taking bets. (We are.)",
+    "*** RULE #1: THE PERSON HOLDING THE SNACKS DECIDES THE ROUTE ***",
+    ">>> SUNSCREEN IS NOT A PERSONALITY TRAIT, IT IS A REQUIREMENT <<<",
+    "NOBODY HAS EVER REGRETTED BRINGING TOO MANY GRAPES",
+    "THE LAKE IS NOT A SPREADSHEET. YOU CANNOT SORT IT.",
+    "STANDUP IS CANCELLED. STANDING UP IN THE BOAT ALSO IS.",
+    "LEIPZIG HAS MORE WATER THAN YOU THINK — RESPECT IT",
+    "BRING A JUMPER, THE SUN CLOCKS OFF EARLIER THAN YOU DO",
+    "IF THE POTATO SALAD HAS BEEN WARM SINCE NOON, LET IT GO",
+    "WHOEVER FORGETS THE BOTTLE OPENER ROWS BACK ALONE",
+    "YES SOMEONE WILL FALL IN ~ NO WE ARE NOT TAKING BETS ~ (WE ARE)",
+    "THIS PAGE IS BEST ENJOYED WITH A DIAL-UP MODEM SOUND IN YOUR HEAD",
+    "Y2K COMPLIANT ~ BOAT COMPLIANT ~ SNACK COMPLIANT",
   ];
 
   function startTicker() {
@@ -220,7 +222,7 @@
       /* force a reflow so the fade-in animation restarts */
       void el.offsetWidth;
       el.style.animation = "";
-    }, 7000);
+    }, 26000);
   }
 
   /* ---------------------------------------------------- Snacks */
@@ -503,7 +505,7 @@
 
       var table = btn.dataset.table;
       var id = btn.dataset.id;
-      if (!window.confirm("Throw this overboard? It is gone for everyone.")) return;
+      if (!window.confirm("Delete this entry? It disappears for everyone.")) return;
 
       btn.disabled = true;
       store

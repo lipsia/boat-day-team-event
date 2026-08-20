@@ -4,46 +4,61 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Boat Day · Lipsia Digital</title>
+    <title>BOAT DAY 2K · Lipsia Digital</title>
     <meta
       name="description"
-      content="Lipsia Digital Boat Day in Leipzig — claim your snacks, sort out the carpool, show up hydrated."
+      content="Lipsia Digital Boat Day — claim your snacks, sort the carpool, party like it is 1999."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=VT323&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="styles.css?v=5" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>"
     />
   </head>
   <body>
+    <!-- starfield -->
+    <div class="stars" aria-hidden="true">
+      <div class="stars__layer stars__layer--1"></div>
+      <div class="stars__layer stars__layer--2"></div>
+      <div class="stars__layer stars__layer--3"></div>
+    </div>
+
+    <!-- floating y2k blobs -->
+    <div class="blobs" aria-hidden="true">
+      <span class="blob blob--1"></span>
+      <span class="blob blob--2"></span>
+      <span class="blob blob--3"></span>
+    </div>
+
     <div id="banner" class="banner" hidden></div>
 
     <!-- ============================================ HERO -->
     <header class="hero">
-      <div class="sun" aria-hidden="true">
-        <div class="sun__rays"></div>
-        <div class="sun__core"></div>
-      </div>
+      <div class="flare" aria-hidden="true"></div>
 
-      <div class="clouds" aria-hidden="true">
-        <span class="cloud cloud--1">☁️</span>
-        <span class="cloud cloud--2">☁️</span>
-        <span class="cloud cloud--3">☁️</span>
+      <div class="sparkles" aria-hidden="true">
+        <span class="sparkle sparkle--1">✦</span>
+        <span class="sparkle sparkle--2">✧</span>
+        <span class="sparkle sparkle--3">✦</span>
+        <span class="sparkle sparkle--4">✧</span>
+        <span class="sparkle sparkle--5">✦</span>
       </div>
 
       <div class="hero__inner">
         <p class="hero__eyebrow">
-          <span class="hero__eyebrow-badge" id="event-company">Lipsia Digital</span>
-          <span class="hero__eyebrow-text">…goes sailing, sort of</span>
+          <span class="tag-3d" id="event-company">Lipsia Digital</span>
+          <span class="blink-soft">★ presents ★</span>
         </p>
 
-        <h1 class="hero__title" id="event-title">Boat Day</h1>
+        <h1 class="chrome" id="event-title" data-text="Boat Day">Boat Day</h1>
+
+        <p class="hero__sub2000" aria-hidden="true">·:·＊ 2 0 0 0 ＊·:·</p>
 
         <p class="hero__subtitle" id="event-subtitle">
           Same team, fewer walls, considerably more water
@@ -52,272 +67,288 @@
         <p class="hero__date" id="event-date" hidden></p>
 
         <div class="hero__meta">
-          <a
-            class="pill pill--sun"
-            id="event-maps-link"
-            href="#"
-            target="_blank"
-            rel="noopener"
-          >
-            <span aria-hidden="true">📍</span>
+          <a class="glossy glossy--aqua" id="event-maps-link" href="#" target="_blank" rel="noopener">
+            <span aria-hidden="true">🌐</span>
             <span id="event-location">Bootsverleih in Leipzig</span>
           </a>
-          <a class="pill" href="#snacks">
-            <span aria-hidden="true">🍕</span> Claim a snack
+          <a class="glossy glossy--magenta" href="#snacks">
+            <span aria-hidden="true">🍕</span> Snack list
           </a>
-          <a class="pill" href="#transport">
-            <span aria-hidden="true">🚗</span> Grab a ride
+          <a class="glossy glossy--lime" href="#transport">
+            <span aria-hidden="true">🚗</span> Rideshare
           </a>
         </div>
 
-        <p class="forecast">
-          <span aria-hidden="true">🌤️</span> Forecast: 100&nbsp;% chance of fun,
-          scattered splashing
+        <p class="badges">
+          <span class="badge98">✨ NEW!</span>
+          <span class="badge98">Best viewed in 800×600</span>
+          <span class="badge98">100% CHANCE OF FUN</span>
         </p>
       </div>
 
       <div class="boat" aria-hidden="true">⛵</div>
 
-      <div class="waves" aria-hidden="true">
-        <svg class="wave wave--back" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,60 C240,110 480,10 720,50 C960,90 1200,20 1440,60 L1440,120 L0,120 Z" />
-        </svg>
-        <svg class="wave wave--mid" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,70 C180,20 420,100 720,60 C1020,20 1260,100 1440,50 L1440,120 L0,120 Z" />
-        </svg>
-        <svg class="wave wave--front" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path d="M0,80 C200,40 460,110 720,80 C980,50 1240,110 1440,80 L1440,120 L0,120 Z" />
+      <div class="chromewave" aria-hidden="true">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="chromeGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="35%" stop-color="#8fe8ff" />
+              <stop offset="55%" stop-color="#0a7fbf" />
+              <stop offset="100%" stop-color="#04263d" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0,70 C180,20 420,100 720,60 C1020,20 1260,100 1440,50 L1440,120 L0,120 Z"
+            fill="url(#chromeGrad)"
+          />
         </svg>
       </div>
     </header>
 
-    <div class="ticker">
-      <span aria-hidden="true">🌊</span>
-      <span id="ticker-text">Loading questionable boating advice…</span>
+    <!-- marquee, obviously -->
+    <div class="marquee">
+      <div class="marquee__track">
+        <span id="ticker-text">Loading questionable boating advice…</span>
+        <span class="marquee__sep" aria-hidden="true">◆</span>
+        <span aria-hidden="true" class="marquee__ghost">
+          Sign the snack list ★ Sign the snack list ★ Sign the snack list
+        </span>
+      </div>
     </div>
 
     <main class="wrap">
       <!-- ============================================ MAP -->
-      <section class="card card--map" aria-labelledby="map-heading">
-        <div class="card__head">
-          <h2 id="map-heading">
-            <span class="badge badge--water" aria-hidden="true">🗺️</span>
-            Where the boat happens
+      <section class="win" aria-labelledby="map-heading">
+        <div class="win__bar">
+          <span class="win__dots" aria-hidden="true"
+            ><i></i><i></i><i></i
+          ></span>
+          <h2 class="win__title" id="map-heading">
+            <span aria-hidden="true">🌐</span> WHERE_THE_BOAT_HAPPENS.HTM
           </h2>
-          <a class="link" id="event-maps-link-2" href="#" target="_blank" rel="noopener"
-            >Open in Maps ↗</a
-          >
+          <span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>✕</i></span>
         </div>
-        <p class="card__lead">
-          If you end up somewhere without water, you have gone too far.
-        </p>
-        <div class="map">
-          <iframe
-            id="map-frame"
-            title="Map: Bootsverleih in Leipzig"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
+        <div class="win__body">
+          <p class="lead">
+            If you end up somewhere without water, you have gone too far.
+            <a class="link" id="event-maps-link-2" href="#" target="_blank" rel="noopener"
+              >Open in Maps »</a
+            >
+          </p>
+          <div class="map">
+            <iframe
+              id="map-frame"
+              title="Map: Bootsverleih in Leipzig"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </section>
 
       <div class="columns">
         <!-- ============================================ SNACKS -->
-        <section class="card card--snacks" id="snacks" aria-labelledby="snacks-heading">
-          <span class="sticker sticker--snacks" aria-hidden="true">no kitchen on board!</span>
-
-          <div class="card__head">
-            <h2 id="snacks-heading">
-              <span class="badge badge--sun" aria-hidden="true">🍕</span>
-              Snacks &amp; Sips
+        <section class="win win--snacks" id="snacks" aria-labelledby="snacks-heading">
+          <div class="win__bar">
+            <span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <h2 class="win__title" id="snacks-heading">
+              <span aria-hidden="true">🍕</span> SNACKS_AND_SIPS.EXE
             </h2>
             <span class="count" id="wish-count">0</span>
           </div>
-          <p class="card__lead">
-            What should come aboard? Every wish gets a name attached — so we know
-            who to thank, or quietly judge.
-          </p>
 
-          <form id="wish-form" class="form" novalidate>
-            <div class="field">
-              <label for="wish-name">What are we eating? 🍽️</label>
-              <input
-                id="wish-name"
-                name="item"
-                type="text"
-                required
-                maxlength="80"
-                autocomplete="off"
-                placeholder="e.g. suspiciously large watermelon"
-              />
-            </div>
+          <div class="win__body">
+            <p class="lead">
+              What comes aboard? Every wish gets a name attached — so we know who
+              to thank, or quietly judge. <span class="blink-soft">◄ sign it!</span>
+            </p>
 
-            <div class="field field--half">
-              <label for="wish-amount">How much? 📦</label>
-              <input
-                id="wish-amount"
-                name="amount"
-                type="text"
-                required
-                maxlength="40"
-                autocomplete="off"
-                placeholder="e.g. 2 trays"
-              />
-            </div>
+            <form id="wish-form" class="form" novalidate>
+              <div class="field">
+                <label for="wish-name">What are we eating?</label>
+                <input
+                  id="wish-name"
+                  name="item"
+                  type="text"
+                  required
+                  maxlength="80"
+                  autocomplete="off"
+                  placeholder="e.g. suspiciously large watermelon"
+                />
+              </div>
 
-            <div class="field field--half">
-              <label for="wish-author">Who's bringing it? 🙋</label>
-              <input
-                id="wish-author"
-                name="author"
-                type="text"
-                required
-                maxlength="60"
-                autocomplete="name"
-                placeholder="your name"
-              />
-            </div>
+              <div class="field field--half">
+                <label for="wish-amount">How much?</label>
+                <input
+                  id="wish-amount"
+                  name="amount"
+                  type="text"
+                  required
+                  maxlength="40"
+                  autocomplete="off"
+                  placeholder="e.g. 2 trays"
+                />
+              </div>
 
-            <button class="btn btn--sun" type="submit">
-              <span aria-hidden="true">🧊</span> Toss it in the cooler
-            </button>
-            <p class="form__error" id="wish-error" role="alert" hidden></p>
-          </form>
+              <div class="field field--half">
+                <label for="wish-author">Who's bringing it?</label>
+                <input
+                  id="wish-author"
+                  name="author"
+                  type="text"
+                  required
+                  maxlength="60"
+                  autocomplete="name"
+                  placeholder="your name"
+                />
+              </div>
 
-          <ul class="list" id="wish-list"></ul>
-          <p class="empty" id="wish-empty">
-            <span aria-hidden="true">🍽️</span>
-            Emptier than the lake in a drought. Be the hero. Add something.
-          </p>
+              <button class="glossy glossy--magenta btn" type="submit">
+                <span aria-hidden="true">🧊</span> Toss it in the cooler
+              </button>
+              <p class="form__error" id="wish-error" role="alert" hidden></p>
+            </form>
+
+            <ul class="list" id="wish-list"></ul>
+            <p class="empty" id="wish-empty">
+              Snack list is empty. Somebody has to go first.
+            </p>
+          </div>
         </section>
 
         <!-- ============================================ TRANSPORT -->
-        <section class="card card--rides" id="transport" aria-labelledby="transport-heading">
-          <span class="sticker sticker--rides" aria-hidden="true">shotgun not guaranteed</span>
-
-          <div class="card__head">
-            <h2 id="transport-heading">
-              <span class="badge badge--water" aria-hidden="true">🚗</span>
-              Carpool Karaoke
+        <section class="win win--rides" id="transport" aria-labelledby="transport-heading">
+          <div class="win__bar">
+            <span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <h2 class="win__title" id="transport-heading">
+              <span aria-hidden="true">🚗</span> RIDESHARE.EXE
             </h2>
             <span class="count" id="ride-count">0</span>
           </div>
-          <p class="card__lead">
-            Got wheels? Offer seats. No wheels? Say so before you end up walking
-            along the canal.
-          </p>
 
-          <form id="ride-form" class="form" novalidate>
-            <fieldset class="segmented">
-              <legend class="sr-only">What kind of entry is this?</legend>
-              <label>
-                <input type="radio" name="kind" value="offer" checked />
-                <span><em aria-hidden="true">🚗</em> I'm driving</span>
-              </label>
-              <label>
-                <input type="radio" name="kind" value="need" />
-                <span><em aria-hidden="true">🙋</em> I need a lift</span>
-              </label>
-            </fieldset>
+          <div class="win__body">
+            <p class="lead">
+              Got wheels? Offer seats. No wheels? Say so before you end up walking
+              along the canal.
+            </p>
 
-            <div class="field field--half">
-              <label for="ride-author">Your name 🧑‍✈️</label>
-              <input
-                id="ride-author"
-                name="author"
-                type="text"
-                required
-                maxlength="60"
-                autocomplete="name"
-                placeholder="your name"
-              />
+            <form id="ride-form" class="form" novalidate>
+              <fieldset class="segmented">
+                <legend class="sr-only">What kind of entry is this?</legend>
+                <label>
+                  <input type="radio" name="kind" value="offer" checked />
+                  <span><em aria-hidden="true">🚗</em> I'm driving</span>
+                </label>
+                <label>
+                  <input type="radio" name="kind" value="need" />
+                  <span><em aria-hidden="true">🙋</em> I need a lift</span>
+                </label>
+              </fieldset>
+
+              <div class="field field--half">
+                <label for="ride-author">Your name</label>
+                <input
+                  id="ride-author"
+                  name="author"
+                  type="text"
+                  required
+                  maxlength="60"
+                  autocomplete="name"
+                  placeholder="your name"
+                />
+              </div>
+
+              <div class="field field--half">
+                <label for="ride-seats" id="ride-seats-label">Free seats</label>
+                <input
+                  id="ride-seats"
+                  name="seats"
+                  type="number"
+                  min="1"
+                  max="20"
+                  step="1"
+                  value="1"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="ride-pickup" id="ride-pickup-label">Pickup point</label>
+                <input
+                  id="ride-pickup"
+                  name="pickup"
+                  type="text"
+                  required
+                  maxlength="120"
+                  autocomplete="off"
+                  placeholder="e.g. the office, 1:30 pm sharp-ish"
+                />
+              </div>
+
+              <div class="field">
+                <label for="ride-note">Notes <span class="opt">(optional)</span></label>
+                <input
+                  id="ride-note"
+                  name="note"
+                  type="text"
+                  maxlength="140"
+                  autocomplete="off"
+                  placeholder="e.g. my playlist is non-negotiable"
+                />
+              </div>
+
+              <button class="glossy glossy--aqua btn" type="submit">
+                <span aria-hidden="true">🎉</span> Add me to the convoy
+              </button>
+              <p class="form__error" id="ride-error" role="alert" hidden></p>
+            </form>
+
+            <div class="stats" id="ride-stats" hidden>
+              <div class="stat">
+                <span class="stat__label">SEATS OFFERED</span>
+                <strong id="stat-offered">0</strong>
+              </div>
+              <div class="stat">
+                <span class="stat__label">SEATS WANTED</span>
+                <strong id="stat-needed">0</strong>
+              </div>
             </div>
 
-            <div class="field field--half">
-              <label for="ride-seats" id="ride-seats-label">Free seats 💺</label>
-              <input
-                id="ride-seats"
-                name="seats"
-                type="number"
-                min="1"
-                max="20"
-                step="1"
-                value="1"
-                required
-              />
-            </div>
+            <h3 class="sub">// DRIVERS</h3>
+            <ul class="list" id="offer-list"></ul>
+            <p class="empty" id="offer-empty">
+              No drivers yet. Somebody has to steer the land-boat.
+            </p>
 
-            <div class="field">
-              <label for="ride-pickup" id="ride-pickup-label">Pickup point 📍</label>
-              <input
-                id="ride-pickup"
-                name="pickup"
-                type="text"
-                required
-                maxlength="120"
-                autocomplete="off"
-                placeholder="e.g. the office, 1:30 pm sharp-ish"
-              />
-            </div>
-
-            <div class="field">
-              <label for="ride-note">Notes <span class="opt">(optional)</span></label>
-              <input
-                id="ride-note"
-                name="note"
-                type="text"
-                maxlength="140"
-                autocomplete="off"
-                placeholder="e.g. my playlist is non-negotiable"
-              />
-            </div>
-
-            <button class="btn btn--water" type="submit">
-              <span aria-hidden="true">🎉</span> Add me to the convoy
-            </button>
-            <p class="form__error" id="ride-error" role="alert" hidden></p>
-          </form>
-
-          <div class="stats" id="ride-stats" hidden>
-            <div class="stat stat--offered">
-              <strong id="stat-offered">0</strong><span>seats offered 💺</span>
-            </div>
-            <div class="stat stat--needed">
-              <strong id="stat-needed">0</strong><span>seats wanted 🙋</span>
-            </div>
+            <h3 class="sub">// LOOKING FOR A LIFT</h3>
+            <ul class="list" id="need-list"></ul>
+            <p class="empty" id="need-empty">
+              Nobody stranded so far. Suspicious, but good.
+            </p>
           </div>
-
-          <h3 class="sub sub--offer">
-            <span aria-hidden="true">🚗</span> Drivers &amp; heroes
-          </h3>
-          <ul class="list" id="offer-list"></ul>
-          <p class="empty" id="offer-empty">
-            <span aria-hidden="true">🚙</span>
-            No drivers yet. Somebody has to steer the land-boat.
-          </p>
-
-          <h3 class="sub sub--need">
-            <span aria-hidden="true">🙋</span> Looking for a lift
-          </h3>
-          <ul class="list" id="need-list"></ul>
-          <p class="empty" id="need-empty">
-            <span aria-hidden="true">🛼</span>
-            Nobody stranded so far. Suspicious, but good.
-          </p>
         </section>
       </div>
     </main>
 
     <footer class="foot">
-      <div class="foot__waves" aria-hidden="true"></div>
-      <p><strong>Lipsia Digital</strong> · Boat Day</p>
+      <p class="foot__counter">
+        <span aria-hidden="true">👁</span> VISITORS:
+        <span class="counter" aria-hidden="true">0000420</span>
+      </p>
+      <p><strong>LIPSIA DIGITAL</strong> ◆ BOAT DAY ◆ EST. 2026</p>
       <p class="foot__small">
         Made with 💦, sunscreen and deeply questionable rowing technique.
         Life jackets are not optional, unlike the potato salad.
       </p>
+      <p class="badges">
+        <span class="badge98">Made with Notepad</span>
+        <span class="badge98">Y2K READY</span>
+        <span class="badge98">🚧 Under construction</span>
+      </p>
     </footer>
 
-    <script src="config.js?v=3"></script>
-    <script src="app.js?v=3"></script>
+    <script src="config.js?v=5"></script>
+    <script src="app.js?v=5"></script>
   </body>
 </html>
