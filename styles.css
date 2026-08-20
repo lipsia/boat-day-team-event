@@ -36,6 +36,14 @@
   box-sizing: border-box;
 }
 
+/* The hidden attribute has to beat every display declaration in this file.
+   Author-level `display: flex/grid/inline-block` otherwise overrides the UA
+   stylesheet's `[hidden] { display: none }`, leaving "hidden" elements — empty
+   error bars, the stats panel — sitting visibly on the page. */
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -861,9 +869,6 @@ input[aria-invalid="true"] {
   box-shadow: inset 1px 1px 0 var(--face-hi), inset -1px -1px 0 var(--face-dk),
     inset 2px 2px 0 var(--face-in), inset -2px -2px 0 var(--face-lo),
     3px 3px 8px rgba(0, 0, 0, 0.4);
-}
-.startmenu[hidden] {
-  display: none;
 }
 .startmenu__rail {
   width: 23px;

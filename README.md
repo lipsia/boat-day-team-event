@@ -63,9 +63,9 @@ file for up to ten minutes. Bump the version query in `index.html` so nobody
 has to clear a cache:
 
 ```html
-<link rel="stylesheet" href="styles.css?v=7" />
-<script src="config.js?v=7"></script>
-<script src="app.js?v=7"></script>
+<link rel="stylesheet" href="styles.css?v=8" />
+<script src="config.js?v=8"></script>
+<script src="app.js?v=8"></script>
 ```
 
 To check which version your own browser has, in the console:
@@ -117,3 +117,9 @@ there, or clear everything out after the event.
   border colours.
 - The visual layer is CSS only. Element IDs and form field names are the
   contract with `app.js` and the database; restyling never touches them.
+- **`[hidden]` must stay guarded.** `styles.css` opens with
+  `[hidden] { display: none !important; }`. Without it, any author-level
+  `display: flex/grid/inline-block` outranks the UA stylesheet and "hidden"
+  elements render anyway — an empty error bar under the submit button, the
+  stats panel showing zeroes. jsdom does **not** reproduce this cascade, so it
+  cannot be caught by a DOM test; keep the guard.
