@@ -1,10 +1,10 @@
 /* ============================================================
-   Lipsia Digital — Team Event
-   Essenswünsche + Mitfahrgelegenheiten
+   Lipsia Digital — Boat Day
+   Snack wishes + carpool sign-up
 
-   Persistenz: Supabase REST API (kein Build, keine Abhängigkeiten).
-   Ohne Zugangsdaten in config.js läuft die Seite im lokalen
-   Vorschau-Modus (localStorage, nur im eigenen Browser sichtbar).
+   Persistence: Supabase REST API (no build step, no dependencies).
+   Without credentials in config.js the page runs in preview mode
+   (localStorage, visible only in your own browser).
    ============================================================ */
 
 (function () {
@@ -59,7 +59,7 @@
             var parsed = JSON.parse(text);
             msg = parsed.message || parsed.hint || text;
           } catch (e) {
-            /* Klartext-Antwort */
+            /* plain-text response */
           }
           throw new Error(msg || "HTTP " + res.status);
         });
@@ -124,9 +124,9 @@
     );
   }
 
-  /* Feld per Name holen. Wichtig: form.elements.item liefert die
-     eingebaute item()-Methode der Collection, nicht das Input-Feld —
-     namedItem() umgeht diese Kollision (auch bei "length", "namedItem"). */
+  /* Look a field up by name. Careful: form.elements.item returns the
+     collection's built-in item() method, not the input — namedItem()
+     sidesteps that collision (same for "length" and "namedItem"). */
   function field(form, name) {
     return form.elements.namedItem(name);
   }
@@ -142,7 +142,7 @@
       var input = field(form, name);
       if (!input) return;
       var empty = !String(input.value || "").trim();
-      /* Radio-Gruppen liefern eine RadioNodeList ohne setAttribute/focus */
+      /* radio groups yield a RadioNodeList, which has no setAttribute/focus */
       if (input.setAttribute) {
         input.setAttribute("aria-invalid", empty ? "true" : "false");
       }
@@ -156,10 +156,10 @@
     var btn = form.querySelector("button[type=submit]");
     btn.disabled = busy;
     btn.dataset.label = btn.dataset.label || btn.textContent;
-    btn.textContent = busy ? "Speichern …" : btn.dataset.label;
+    btn.textContent = busy ? "Saving …" : btn.dataset.label;
   }
 
-  /* ---------------------------------------------------- Event-Infos */
+  /* ---------------------------------------------------- Event info */
 
   function renderEvent() {
     if (EVENT.company) $("event-company").textContent = EVENT.company;
@@ -184,15 +184,93 @@
     if (!live) {
       var banner = $("banner");
       banner.innerHTML =
-        "<strong>Vorschau-Modus:</strong> Einträge liegen nur in diesem Browser. " +
-        "Für die geteilte Liste <code>SUPABASE_URL</code> und " +
-        "<code>SUPABASE_ANON_KEY</code> in <code>config.js</code> eintragen " +
-        "(siehe <code>README.md</code>).";
+        "<strong>🛟 Preview mode:</strong> entries only live in this browser. " +
+        "For the shared list, put <code>SUPABASE_URL</code> and " +
+        "<code>SUPABASE_ANON_KEY</code> into <code>config.js</code> " +
+        "(see <code>README.md</code>).";
       banner.hidden = false;
     }
   }
 
-  /* ---------------------------------------------------- Essen */
+  /* ---------------------------------------------------- Fun ticker */
+
+  var TICKER_LINES = [
+    "Rule #1: the person holding the snacks decides the route.",
+    "Sunscreen is not a personality trait, but it is a requirement.",
+    "Nobody has ever regretted bringing too many grapes.",
+    "The lake is not a spreadsheet. You cannot sort it.",
+    "Standup is cancelled. Standing up in the boat also is.",
+    "Leipzig has more water than you think. Respect it.",
+    "Bring a jumper. The sun clocks off earlier than you do.",
+    "If the potato salad has been warm since noon, let it go.",
+    "Whoever forgets the bottle opener rows back alone.",
+    "Yes, someone will fall in. No, we are not taking bets. (We are.)",
+  ];
+
+  function startTicker() {
+    var el = $("ticker-text");
+    if (!el) return;
+    /* start index from the current minute, so it does not jump around */
+    var i = new Date().getMinutes() % TICKER_LINES.length;
+    el.textContent = TICKER_LINES[i];
+    setInterval(function () {
+      i = (i + 1) % TICKER_LINES.length;
+      el.style.animation = "none";
+      el.textContent = TICKER_LINES[i];
+      /* force a reflow so the fade-in animation restarts */
+      void el.offsetWidth;
+      el.style.animation = "";
+    }, 7000);
+  }
+
+  /* ---------------------------------------------------- Snacks */
+
+  /* Guess a fitting emoji for the wish — decoration only, has a fallback. */
+  var FOOD_EMOJI = [
+    [/pizza|margherita|salami/i, "🍕"],
+    [/beer|bier|pils|lager|ale/i, "🍺"],
+    [/wine|wein|prosecco|sekt|champ/i, "🍷"],
+    [/water|wasser|sprudel/i, "💧"],
+    [/cola|soda|limo|fanta|sprite|juice|saft/i, "🥤"],
+    [/coffee|kaffee|espresso/i, "☕"],
+    [/cake|kuchen|torte|muffin|brownie/i, "🍰"],
+    [/cookie|keks|biscuit/i, "🍪"],
+    [/ice|eis|sorbet/i, "🍦"],
+    [/chips|crisps|nacho|pretzel|brezel/i, "🥨"],
+    [/melon|melone/i, "🍉"],
+    [/grape|traube/i, "🍇"],
+    [/strawberr|erdbeer/i, "🍓"],
+    [/apple|apfel/i, "🍎"],
+    [/banana|banane/i, "🍌"],
+    [/salad|salat|slaw/i, "🥗"],
+    [/potato|kartoffel|fries|pommes/i, "🥔"],
+    [/bread|brot|baguette|roll|brötchen/i, "🥖"],
+    [/cheese|käse/i, "🧀"],
+    [/sausage|wurst|bratwurst|grill|bbq/i, "🌭"],
+    [/burger/i, "🍔"],
+    [/wrap|burrito|taco/i, "🌯"],
+    [/sushi|maki/i, "🍣"],
+    [/noodle|pasta|nudel|spaghetti/i, "🍝"],
+    [/hummus|dip|sauce|soße/i, "🥣"],
+    [/veg|gemüse|carrot|karotte|cucumber|gurke/i, "🥕"],
+    [/nut|nuss|mandel|peanut/i, "🥜"],
+    [/choco|schoko/i, "🍫"],
+    [/tea|tee/i, "🍵"],
+  ];
+  var FALLBACK_EMOJI = ["🍽️", "🧺", "🥪", "🍱", "🛟", "🌞", "🧊"];
+
+  function foodEmoji(text) {
+    var value = String(text || "");
+    for (var i = 0; i < FOOD_EMOJI.length; i++) {
+      if (FOOD_EMOJI[i][0].test(value)) return FOOD_EMOJI[i][1];
+    }
+    /* stable fallback: same input -> same emoji */
+    var hash = 0;
+    for (var c = 0; c < value.length; c++) {
+      hash = (hash * 31 + value.charCodeAt(c)) % 100000;
+    }
+    return FALLBACK_EMOJI[hash % FALLBACK_EMOJI.length];
+  }
 
   var wishes = [];
 
@@ -205,11 +283,14 @@
       .map(function (w) {
         return (
           '<li class="item">' +
+          '<span class="item__emoji" aria-hidden="true">' +
+          foodEmoji(w.item) +
+          "</span>" +
           '<div class="item__body">' +
           '<div class="item__title">' +
           esc(w.item) +
           "</div>" +
-          '<div class="item__meta">von <strong>' +
+          '<div class="item__meta">brought by <strong>' +
           esc(w.author) +
           "</strong></div>" +
           "</div>" +
@@ -218,9 +299,9 @@
           "</span>" +
           '<button class="del" type="button" data-table="wishes" data-id="' +
           esc(w.id) +
-          '" title="Wunsch löschen" aria-label="Wunsch von ' +
+          '" title="Throw overboard" aria-label="Remove the snack added by ' +
           esc(w.author) +
-          ' löschen">×</button>' +
+          '">×</button>' +
           "</li>"
         );
       })
@@ -262,16 +343,18 @@
       '<li class="item' +
       (isOffer ? "" : " item--need") +
       '">' +
+      '<span class="item__emoji" aria-hidden="true">' +
+      (isOffer ? "🚗" : "🙋") +
+      "</span>" +
       '<div class="item__body">' +
       '<div class="item__title">' +
       esc(r.author) +
       (isOffer
-        ? " nimmt " + seats + (seats === 1 ? " Person" : " Personen") + " mit"
-        : " braucht " +
-          (seats === 1 ? "einen Platz" : seats + " Plätze")) +
+        ? " can take " + seats + (seats === 1 ? " person" : " people")
+        : " needs " + (seats === 1 ? "a seat" : seats + " seats")) +
       "</div>" +
       '<div class="item__meta">' +
-      (isOffer ? "Treffpunkt: " : "Startpunkt: ") +
+      (isOffer ? "Leaving from: " : "Pick me up at: ") +
       "<strong>" +
       esc(r.pickup) +
       "</strong>" +
@@ -279,30 +362,32 @@
       "</div>" +
       "</div>" +
       '<span class="tag">' +
-      (isOffer ? seats + " frei" : "gesucht") +
+      (isOffer
+        ? seats + (seats === 1 ? " seat free" : " seats free")
+        : "needs a lift") +
       "</span>" +
       '<button class="del" type="button" data-table="rides" data-id="' +
       esc(r.id) +
-      '" title="Eintrag löschen" aria-label="Eintrag von ' +
+      '" title="Throw overboard" aria-label="Remove the entry added by ' +
       esc(r.author) +
-      ' löschen">×</button>' +
+      '">×</button>' +
       "</li>"
     );
   }
 
-  /* Formular-Beschriftungen an "biete/suche" anpassen */
+  /* Relabel the form: driving vs. needing a lift */
   function syncRideForm() {
     var form = $("ride-form");
     var isOffer = field(form, "kind").value === "offer";
     $("ride-seats-label").textContent = isOffer
-      ? "Freie Plätze"
-      : "Wie viele Personen?";
+      ? "Free seats 💺"
+      : "How many of you? 🙋";
     $("ride-pickup-label").textContent = isOffer
-      ? "Treffpunkt / Abfahrtsort"
-      : "Wo möchtest du abgeholt werden?";
+      ? "Where are you leaving from? 📍"
+      : "Where should we grab you? 📍";
     field(form, "pickup").placeholder = isOffer
-      ? "z. B. Büro Lipsia Digital, 13:30"
-      : "z. B. Hauptbahnhof Ostseite";
+      ? "e.g. the office, 1:30 pm sharp-ish"
+      : "e.g. Hauptbahnhof, east side";
   }
 
   /* ---------------------------------------------------- Wiring */
@@ -318,7 +403,7 @@
       .catch(function (err) {
         var banner = $("banner");
         banner.innerHTML =
-          "<strong>Daten konnten nicht geladen werden:</strong> " +
+          "<strong>🪣 Could not load the lists:</strong> " +
           esc(err.message);
         banner.hidden = false;
       });
@@ -326,11 +411,12 @@
 
   function init() {
     renderEvent();
+    startTicker();
     renderWishes();
     renderRides();
     syncRideForm();
 
-    /* Essenswunsch */
+    /* snack wish */
     $("wish-form").addEventListener("submit", function (event) {
       event.preventDefault();
       var form = event.target;
@@ -338,7 +424,7 @@
       setError(errorEl, "");
 
       if (!validate(form, ["item", "amount", "author"])) {
-        setError(errorEl, "Bitte alle Felder ausfüllen.");
+        setError(errorEl, "Every field, please — snacks need an owner. 🍽️");
         return;
       }
 
@@ -354,18 +440,18 @@
           renderWishes();
           var author = field(form, "author").value;
           form.reset();
-          field(form, "author").value = author; /* Name merken */
+          field(form, "author").value = author; /* keep the name for the next entry */
           field(form, "item").focus();
         })
         .catch(function (err) {
-          setError(errorEl, "Speichern fehlgeschlagen: " + err.message);
+          setError(errorEl, "Could not save that: " + err.message);
         })
         .then(function () {
           submitting(form, false);
         });
     });
 
-    /* Mitfahrgelegenheit */
+    /* carpool entry */
     $("ride-form").addEventListener("change", function (event) {
       if (event.target.name === "kind") syncRideForm();
     });
@@ -377,7 +463,7 @@
       setError(errorEl, "");
 
       if (!validate(form, ["author", "seats", "pickup"])) {
-        setError(errorEl, "Bitte Name, Plätze und Treffpunkt angeben.");
+        setError(errorEl, "Need a name, a seat count and a pickup point. 🚗");
         return;
       }
 
@@ -403,21 +489,21 @@
           syncRideForm();
         })
         .catch(function (err) {
-          setError(errorEl, "Speichern fehlgeschlagen: " + err.message);
+          setError(errorEl, "Could not save that: " + err.message);
         })
         .then(function () {
           submitting(form, false);
         });
     });
 
-    /* Löschen (beide Listen) */
+    /* delete (both lists) */
     document.addEventListener("click", function (event) {
       var btn = event.target.closest(".del");
       if (!btn) return;
 
       var table = btn.dataset.table;
       var id = btn.dataset.id;
-      if (!window.confirm("Diesen Eintrag wirklich löschen?")) return;
+      if (!window.confirm("Throw this overboard? It is gone for everyone.")) return;
 
       btn.disabled = true;
       store
@@ -436,14 +522,14 @@
         })
         .catch(function (err) {
           btn.disabled = false;
-          window.alert("Löschen fehlgeschlagen: " + err.message);
+          window.alert("Could not remove that: " + err.message);
         });
     });
 
     loadAll();
 
-    /* Beim Zurückkehren auf den Tab neu laden, damit fremde
-       Einträge sichtbar werden. */
+    /* Reload when the tab regains focus so entries added by other
+       people show up. */
     if (live) {
       document.addEventListener("visibilitychange", function () {
         if (!document.hidden) loadAll();

@@ -1,114 +1,110 @@
-# Team Event — Lipsia Digital
+# ⛵ Boat Day — Lipsia Digital
 
-Statische Website für das Team Event am [Bootsverleih in Leipzig](https://www.google.de/maps/place/Bootsverleih+in+Leipzig/@51.2641356,12.3420663,17.97z/data=!4m6!3m5!1s0x47a6fa7335079b25:0xc1e0fb89ee4f9d89!8m2!3d51.2632374!4d12.3427702!16s%2Fg%2F11ckqrfwyk):
+A small, loud, static website for our team event at the
+[Bootsverleih in Leipzig](https://www.google.de/maps/place/Bootsverleih+in+Leipzig/@51.2641356,12.3420663,17.97z/data=!4m6!3m5!1s0x47a6fa7335079b25:0xc1e0fb89ee4f9d89!8m2!3d51.2632374!4d12.3427702!16s%2Fg%2F11ckqrfwyk).
 
-- **Essenswünsche** — Was, Menge, von wem (jeder Wunsch gehört zu einer Person)
-- **Mitfahrgelegenheiten** — biete X Plätze ab Treffpunkt / suche Mitfahrgelegenheit, immer mit Namen
-- Beide Formulare sind unabhängig voneinander
-- Alle Einträge sind für alle sichtbar und können gelöscht werden
+- **Snacks & Sips** — what, how much, and who's bringing it (every wish is tied to a person)
+- **Carpool Karaoke** — offer seats from a pickup point, or say you need a lift; always with a name
+- The two forms are completely independent
+- Everything is visible to everyone, and anything can be thrown overboard again
 
-Kein Build-Schritt, keine Abhängigkeiten — vier Dateien, direkt für GitHub Pages.
+No build step, no dependencies, no framework. Six files and a lot of CSS animation.
+
+**Live:** https://lipsia.github.io/boat-day-team-event/
 
 ---
 
-## 1. Datenbank einrichten (Supabase, kostenlos)
+## 1. Database (Supabase, free)
 
-1. Auf [supabase.com](https://supabase.com/dashboard) anmelden → **New project**
-   (Region: Frankfurt/EU, Passwort beliebig — brauchst du für die Seite nicht).
-2. Im Projekt links **SQL Editor** öffnen, den kompletten Inhalt von
-   [`schema.sql`](schema.sql) einfügen und **Run** klicken.
-3. **Project Settings → API** öffnen und zwei Werte kopieren:
-   - `Project URL` → z. B. `https://abcdefgh.supabase.co`
-   - `anon` `public` API key (der lange JWT)
-4. Beides in [`config.js`](config.js) eintragen:
+1. Sign in at [supabase.com](https://supabase.com/dashboard) → **New project**
+   (region: Frankfurt/EU; the database password is not needed by the site).
+2. Open **SQL Editor**, paste all of [`schema.sql`](schema.sql), hit **Run**.
+3. Go to **Project Settings → API** and copy two values:
+   - `Project URL` — e.g. `https://abcdefgh.supabase.co`
+   - the `anon` / `publishable` API key
+4. Put both into [`config.js`](config.js).
 
-   ```js
-   SUPABASE_URL: "https://abcdefgh.supabase.co",
-   SUPABASE_ANON_KEY: "eyJhbGciOi...",
-   ```
+> The key is meant to sit in the browser, so it lives in the source on purpose.
+> What it can actually do is defined by the RLS policies in `schema.sql`: read,
+> insert and delete in exactly those two tables, nothing else. Anyone with the
+> link can add and remove entries — that's the point for an internal team page.
+> Don't post the link publicly.
 
-> Der `anon` key steht bewusst im Quellcode — er ist für den Browser gedacht.
-> Was damit erlaubt ist, legen die RLS-Policies in `schema.sql` fest: lesen,
-> eintragen und löschen in genau diesen zwei Tabellen, sonst nichts.
-> Wer den Link hat, kann Einträge anlegen und löschen — für eine interne
-> Team-Seite ist das gewollt. Den Link also nicht öffentlich verlinken.
+With `config.js` left empty the site runs in **preview mode**: entries stay in
+your own browser (localStorage) and a banner says so. Handy for a quick look,
+but not a shared list.
 
-Solange `config.js` leer ist, läuft die Seite im **Vorschau-Modus**: Einträge
-landen nur im eigenen Browser (localStorage), und oben erscheint ein Hinweis.
-Gut zum Ausprobieren, aber keine geteilte Liste.
+## 2. Event details
 
-## 2. Event-Infos anpassen
+Also in `config.js`, under `EVENT`: title, subtitle, the Google Maps links, and
+the date — `date: "Saturday, 5 September · 2 pm"`. Leave `date` empty and the
+badge simply doesn't render.
 
-Ebenfalls in `config.js` unter `EVENT`: Titel, Untertitel, Datum
-(`date: "Samstag, 5. September · 14:00"` — leer lassen, wenn noch offen) und
-der Google-Maps-Link.
+## 3. Deploy (GitHub Pages)
 
-## 3. Auf GitHub Pages veröffentlichen
+Already set up for this repo: **Settings → Pages**, branch `main`, folder
+`/ (root)`. Every push to `main` redeploys within a minute or two.
 
 ```bash
-git init
-git add .
-git commit -m "Team Event Website"
-git branch -M main
-git remote add origin git@github.com:<user-oder-org>/<repo>.git
-git push -u origin main
+git add -A
+git commit -m "your message"
+git push
 ```
 
-Dann im Repo: **Settings → Pages → Source: `Deploy from a branch`**,
-Branch `main`, Folder `/ (root)` → **Save**.
+> Free GitHub Pages needs a **public** repo, which is why the Supabase key is
+> publicly visible here. If you'd rather it weren't, Cloudflare Pages hosts
+> private repos on its free tier.
 
-Nach ein bis zwei Minuten ist die Seite unter
-`https://<user-oder-org>.github.io/<repo>/` erreichbar.
+## 4. After changing app.js / config.js / styles.css
 
-> Bei einem **privaten** Repo braucht GitHub Pages einen bezahlten Plan.
-> Mit einem öffentlichen Repo ist Pages kostenlos — dann steht allerdings der
-> `anon` key öffentlich im Repo. Für ein Team-Event mit Essens- und
-> Fahrtenliste ist das in der Praxis unkritisch; wer es dichter will, nutzt
-> ein privates Repo (GitHub Team/Pro) oder hostet z. B. bei Netlify/Cloudflare
-> Pages, wo private Repos auch im Gratis-Tarif gehen.
+Pages serves with `cache-control: max-age=600`, so browsers can hold the old
+file for up to ten minutes. Bump the version query in `index.html` so nobody
+has to clear a cache:
 
-## Lokal testen
+```html
+<link rel="stylesheet" href="styles.css?v=4" />
+<script src="config.js?v=4"></script>
+<script src="app.js?v=4"></script>
+```
+
+To check which version your own browser has, in the console:
+
+```js
+fetch('app.js', { cache: 'reload' })
+  .then(r => r.text())
+  .then(t => console.log(t.includes('namedItem') ? 'current' : 'stale'));
+```
+
+## Local preview
 
 ```bash
 python3 -m http.server 8000
 # → http://localhost:8000
 ```
 
-(`file://` direkt öffnen geht auch, nur der Karten-iframe kann dabei zicken.)
+## Files
 
-## Dateien
+| File         | Purpose                                                  |
+| ------------ | -------------------------------------------------------- |
+| `index.html` | Structure: hero, map, both forms and lists               |
+| `styles.css` | The sun, the water, the wobbling                         |
+| `app.js`     | Forms, rendering, Supabase access, snack-emoji guessing  |
+| `config.js`  | **Credentials and event details — edit this one**        |
+| `schema.sql` | Tables and access rules for Supabase                     |
 
-| Datei        | Zweck                                             |
-| ------------ | ------------------------------------------------- |
-| `index.html` | Struktur: Hero, Karte, beide Formulare und Listen |
-| `styles.css` | Gestaltung                                        |
-| `app.js`     | Formulare, Rendering, Supabase-Zugriff            |
-| `config.js`  | **Zugangsdaten und Event-Infos — hier anpassen**  |
-| `schema.sql` | Tabellen und Zugriffsregeln für Supabase          |
+## Looking at the data
 
-## Daten ansehen oder aufräumen
+Supabase dashboard → **Table Editor** → `wishes` / `rides`. You can export CSV
+there, or clear everything out after the event.
 
-Im Supabase-Dashboard unter **Table Editor** → `wishes` / `rides`. Dort lassen
-sich Einträge auch exportieren (CSV) oder nach dem Event alle löschen.
+## Notes for whoever touches this next
 
-## Nach Änderungen an app.js / config.js
-
-GitHub Pages liefert Dateien mit `cache-control: max-age=600` aus — Browser
-halten also bis zu 10 Minuten die alte Version. Damit Änderungen sofort
-ankommen, die Versionsnummer in `index.html` erhöhen:
-
-```html
-<script src="config.js?v=3"></script>
-<script src="app.js?v=3"></script>
-```
-
-Der geänderte Dateiname erzwingt einen Neuabruf, ohne dass jemand den
-Cache leeren muss.
-
-Zum Prüfen, welche Version der eigene Browser hat (Konsole öffnen):
-
-```js
-fetch('app.js', { cache: 'reload' })
-  .then(r => r.text())
-  .then(t => console.log(t.includes('namedItem') ? 'aktuell' : 'veraltet'));
-```
+- Form field names map 1:1 to database columns (`item`, `amount`, `author` /
+  `kind`, `author`, `seats`, `pickup`, `note`).
+- Fields are looked up with `form.elements.namedItem(name)`, **not**
+  `form.elements.item` — the latter returns the collection's built-in `item()`
+  method and silently breaks the form. Same trap applies to `length`.
+- All animation is wrapped by a `prefers-reduced-motion` block, so the page
+  goes still for anyone who asks their OS for that.
+- The snack emoji is decoration derived from the text at render time. It is
+  never stored, so editing the keyword list can't corrupt existing rows.

@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Team Event · Lipsia Digital</title>
+    <title>Boat Day · Lipsia Digital</title>
     <meta
       name="description"
-      content="Team Event von Lipsia Digital am Bootsverleih in Leipzig — Essenswünsche eintragen und Mitfahrgelegenheiten organisieren."
+      content="Lipsia Digital Boat Day in Leipzig — claim your snacks, sort out the carpool, show up hydrated."
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=3" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>"
@@ -18,49 +24,97 @@
   <body>
     <div id="banner" class="banner" hidden></div>
 
+    <!-- ============================================ HERO -->
     <header class="hero">
+      <div class="sun" aria-hidden="true">
+        <div class="sun__rays"></div>
+        <div class="sun__core"></div>
+      </div>
+
+      <div class="clouds" aria-hidden="true">
+        <span class="cloud cloud--1">☁️</span>
+        <span class="cloud cloud--2">☁️</span>
+        <span class="cloud cloud--3">☁️</span>
+      </div>
+
       <div class="hero__inner">
-        <p class="hero__eyebrow" id="event-company">Lipsia Digital</p>
-        <h1 class="hero__title" id="event-title">Team Event</h1>
-        <p class="hero__subtitle" id="event-subtitle">
-          Bootstour auf dem Leipziger Wasser
+        <p class="hero__eyebrow">
+          <span class="hero__eyebrow-badge" id="event-company">Lipsia Digital</span>
+          <span class="hero__eyebrow-text">…goes sailing, sort of</span>
         </p>
+
+        <h1 class="hero__title" id="event-title">Boat Day</h1>
+
+        <p class="hero__subtitle" id="event-subtitle">
+          Same team, fewer walls, considerably more water
+        </p>
+
         <p class="hero__date" id="event-date" hidden></p>
 
         <div class="hero__meta">
-          <a class="pill" id="event-maps-link" href="#" target="_blank" rel="noopener">
-            <span aria-hidden="true">📍</span>
-            <span id="event-location">Bootsverleih in Leipzig</span>
-          </a>
-          <a class="pill pill--ghost" href="#essen">
-            <span aria-hidden="true">🍕</span> Essenswünsche
-          </a>
-          <a class="pill pill--ghost" href="#transport">
-            <span aria-hidden="true">🚗</span> Mitfahren
-          </a>
-        </div>
-      </div>
-      <div class="hero__wave" aria-hidden="true"></div>
-    </header>
-
-    <main class="wrap">
-      <!-- ------------------------------------------------ Treffpunkt -->
-      <section class="card card--map" aria-labelledby="map-heading">
-        <div class="card__head">
-          <h2 id="map-heading">Treffpunkt</h2>
           <a
-            class="link"
-            id="event-maps-link-2"
+            class="pill pill--sun"
+            id="event-maps-link"
             href="#"
             target="_blank"
             rel="noopener"
-            >In Google Maps öffnen ↗</a
+          >
+            <span aria-hidden="true">📍</span>
+            <span id="event-location">Bootsverleih in Leipzig</span>
+          </a>
+          <a class="pill" href="#snacks">
+            <span aria-hidden="true">🍕</span> Claim a snack
+          </a>
+          <a class="pill" href="#transport">
+            <span aria-hidden="true">🚗</span> Grab a ride
+          </a>
+        </div>
+
+        <p class="forecast">
+          <span aria-hidden="true">🌤️</span> Forecast: 100&nbsp;% chance of fun,
+          scattered splashing
+        </p>
+      </div>
+
+      <div class="boat" aria-hidden="true">⛵</div>
+
+      <div class="waves" aria-hidden="true">
+        <svg class="wave wave--back" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,60 C240,110 480,10 720,50 C960,90 1200,20 1440,60 L1440,120 L0,120 Z" />
+        </svg>
+        <svg class="wave wave--mid" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,70 C180,20 420,100 720,60 C1020,20 1260,100 1440,50 L1440,120 L0,120 Z" />
+        </svg>
+        <svg class="wave wave--front" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,80 C200,40 460,110 720,80 C980,50 1240,110 1440,80 L1440,120 L0,120 Z" />
+        </svg>
+      </div>
+    </header>
+
+    <div class="ticker">
+      <span aria-hidden="true">🌊</span>
+      <span id="ticker-text">Loading questionable boating advice…</span>
+    </div>
+
+    <main class="wrap">
+      <!-- ============================================ MAP -->
+      <section class="card card--map" aria-labelledby="map-heading">
+        <div class="card__head">
+          <h2 id="map-heading">
+            <span class="badge badge--water" aria-hidden="true">🗺️</span>
+            Where the boat happens
+          </h2>
+          <a class="link" id="event-maps-link-2" href="#" target="_blank" rel="noopener"
+            >Open in Maps ↗</a
           >
         </div>
+        <p class="card__lead">
+          If you end up somewhere without water, you have gone too far.
+        </p>
         <div class="map">
           <iframe
             id="map-frame"
-            title="Karte: Bootsverleih in Leipzig"
+            title="Map: Bootsverleih in Leipzig"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
@@ -68,20 +122,25 @@
       </section>
 
       <div class="columns">
-        <!-- ------------------------------------------------ Essen -->
-        <section class="card" id="essen" aria-labelledby="essen-heading">
+        <!-- ============================================ SNACKS -->
+        <section class="card card--snacks" id="snacks" aria-labelledby="snacks-heading">
+          <span class="sticker sticker--snacks" aria-hidden="true">no kitchen on board!</span>
+
           <div class="card__head">
-            <h2 id="essen-heading"><span aria-hidden="true">🍕</span> Essen &amp; Trinken</h2>
+            <h2 id="snacks-heading">
+              <span class="badge badge--sun" aria-hidden="true">🍕</span>
+              Snacks &amp; Sips
+            </h2>
             <span class="count" id="wish-count">0</span>
           </div>
           <p class="card__lead">
-            Was soll mit an Bord? Trag deinen Wunsch ein — jeder Wunsch gehört
-            zu einer Person.
+            What should come aboard? Every wish gets a name attached — so we know
+            who to thank, or quietly judge.
           </p>
 
           <form id="wish-form" class="form" novalidate>
             <div class="field">
-              <label for="wish-name">Was?</label>
+              <label for="wish-name">What are we eating? 🍽️</label>
               <input
                 id="wish-name"
                 name="item"
@@ -89,12 +148,12 @@
                 required
                 maxlength="80"
                 autocomplete="off"
-                placeholder="z. B. Vegetarische Wraps"
+                placeholder="e.g. suspiciously large watermelon"
               />
             </div>
 
             <div class="field field--half">
-              <label for="wish-amount">Menge</label>
+              <label for="wish-amount">How much? 📦</label>
               <input
                 id="wish-amount"
                 name="amount"
@@ -102,12 +161,12 @@
                 required
                 maxlength="40"
                 autocomplete="off"
-                placeholder="z. B. 2 Bleche"
+                placeholder="e.g. 2 trays"
               />
             </div>
 
             <div class="field field--half">
-              <label for="wish-author">Von wem?</label>
+              <label for="wish-author">Who's bringing it? 🙋</label>
               <input
                 id="wish-author"
                 name="author"
@@ -115,44 +174,54 @@
                 required
                 maxlength="60"
                 autocomplete="name"
-                placeholder="Dein Name"
+                placeholder="your name"
               />
             </div>
 
-            <button class="btn" type="submit">Wunsch hinzufügen</button>
+            <button class="btn btn--sun" type="submit">
+              <span aria-hidden="true">🧊</span> Toss it in the cooler
+            </button>
             <p class="form__error" id="wish-error" role="alert" hidden></p>
           </form>
 
           <ul class="list" id="wish-list"></ul>
-          <p class="empty" id="wish-empty">Noch keine Wünsche eingetragen.</p>
+          <p class="empty" id="wish-empty">
+            <span aria-hidden="true">🍽️</span>
+            Emptier than the lake in a drought. Be the hero. Add something.
+          </p>
         </section>
 
-        <!-- ------------------------------------------------ Transport -->
-        <section class="card" id="transport" aria-labelledby="transport-heading">
+        <!-- ============================================ TRANSPORT -->
+        <section class="card card--rides" id="transport" aria-labelledby="transport-heading">
+          <span class="sticker sticker--rides" aria-hidden="true">shotgun not guaranteed</span>
+
           <div class="card__head">
-            <h2 id="transport-heading"><span aria-hidden="true">🚗</span> Mitfahrgelegenheiten</h2>
+            <h2 id="transport-heading">
+              <span class="badge badge--water" aria-hidden="true">🚗</span>
+              Carpool Karaoke
+            </h2>
             <span class="count" id="ride-count">0</span>
           </div>
           <p class="card__lead">
-            Biete freie Plätze an oder sag, dass du eine Mitfahrgelegenheit
-            brauchst.
+            Got wheels? Offer seats. No wheels? Say so before you end up walking
+            along the canal.
           </p>
 
           <form id="ride-form" class="form" novalidate>
             <fieldset class="segmented">
-              <legend class="sr-only">Art des Eintrags</legend>
+              <legend class="sr-only">What kind of entry is this?</legend>
               <label>
                 <input type="radio" name="kind" value="offer" checked />
-                <span>Ich biete eine Mitfahrgelegenheit</span>
+                <span><em aria-hidden="true">🚗</em> I'm driving</span>
               </label>
               <label>
                 <input type="radio" name="kind" value="need" />
-                <span>Ich suche eine Mitfahrgelegenheit</span>
+                <span><em aria-hidden="true">🙋</em> I need a lift</span>
               </label>
             </fieldset>
 
             <div class="field field--half">
-              <label for="ride-author">Von wem?</label>
+              <label for="ride-author">Your name 🧑‍✈️</label>
               <input
                 id="ride-author"
                 name="author"
@@ -160,12 +229,12 @@
                 required
                 maxlength="60"
                 autocomplete="name"
-                placeholder="Dein Name"
+                placeholder="your name"
               />
             </div>
 
             <div class="field field--half">
-              <label for="ride-seats" id="ride-seats-label">Plätze</label>
+              <label for="ride-seats" id="ride-seats-label">Free seats 💺</label>
               <input
                 id="ride-seats"
                 name="seats"
@@ -179,7 +248,7 @@
             </div>
 
             <div class="field">
-              <label for="ride-pickup" id="ride-pickup-label">Treffpunkt</label>
+              <label for="ride-pickup" id="ride-pickup-label">Pickup point 📍</label>
               <input
                 id="ride-pickup"
                 name="pickup"
@@ -187,51 +256,68 @@
                 required
                 maxlength="120"
                 autocomplete="off"
-                placeholder="z. B. Büro, 13:30"
+                placeholder="e.g. the office, 1:30 pm sharp-ish"
               />
             </div>
 
             <div class="field">
-              <label for="ride-note">Notiz <span class="opt">(optional)</span></label>
+              <label for="ride-note">Notes <span class="opt">(optional)</span></label>
               <input
                 id="ride-note"
                 name="note"
                 type="text"
                 maxlength="140"
                 autocomplete="off"
-                placeholder="z. B. Rückfahrt auch möglich"
+                placeholder="e.g. my playlist is non-negotiable"
               />
             </div>
 
-            <button class="btn" type="submit">Eintrag hinzufügen</button>
+            <button class="btn btn--water" type="submit">
+              <span aria-hidden="true">🎉</span> Add me to the convoy
+            </button>
             <p class="form__error" id="ride-error" role="alert" hidden></p>
           </form>
 
           <div class="stats" id="ride-stats" hidden>
-            <div class="stat">
-              <strong id="stat-offered">0</strong><span>Plätze angeboten</span>
+            <div class="stat stat--offered">
+              <strong id="stat-offered">0</strong><span>seats offered 💺</span>
             </div>
-            <div class="stat">
-              <strong id="stat-needed">0</strong><span>Plätze gesucht</span>
+            <div class="stat stat--needed">
+              <strong id="stat-needed">0</strong><span>seats wanted 🙋</span>
             </div>
           </div>
 
-          <h3 class="sub">Angebote</h3>
+          <h3 class="sub sub--offer">
+            <span aria-hidden="true">🚗</span> Drivers &amp; heroes
+          </h3>
           <ul class="list" id="offer-list"></ul>
-          <p class="empty" id="offer-empty">Noch keine Angebote.</p>
+          <p class="empty" id="offer-empty">
+            <span aria-hidden="true">🚙</span>
+            No drivers yet. Somebody has to steer the land-boat.
+          </p>
 
-          <h3 class="sub">Gesuche</h3>
+          <h3 class="sub sub--need">
+            <span aria-hidden="true">🙋</span> Looking for a lift
+          </h3>
           <ul class="list" id="need-list"></ul>
-          <p class="empty" id="need-empty">Noch keine Gesuche.</p>
+          <p class="empty" id="need-empty">
+            <span aria-hidden="true">🛼</span>
+            Nobody stranded so far. Suspicious, but good.
+          </p>
         </section>
       </div>
     </main>
 
     <footer class="foot">
-      <p>Lipsia Digital · Team Event</p>
+      <div class="foot__waves" aria-hidden="true"></div>
+      <p><strong>Lipsia Digital</strong> · Boat Day</p>
+      <p class="foot__small">
+        Made with 💦, sunscreen and deeply questionable rowing technique.
+        Life jackets are not optional, unlike the potato salad.
+      </p>
     </footer>
 
-    <script src="config.js?v=2"></script>
-    <script src="app.js?v=2"></script>
+    <script src="config.js?v=3"></script>
+    <script src="app.js?v=3"></script>
   </body>
 </html>
