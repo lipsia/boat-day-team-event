@@ -638,7 +638,7 @@
           '<div class="item__title">' +
           esc(w.item) +
           "</div>" +
-          '<div class="item__meta">brought by <strong>' +
+          '<div class="item__meta">wanted by <strong>' +
           esc(w.author) +
           "</strong></div>" +
           "</div>" +
