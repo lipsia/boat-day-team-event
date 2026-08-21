@@ -444,12 +444,6 @@ a.deskicon:focus-visible {
   margin: 0 0 11px;
   color: var(--ink-soft);
 }
-.lead--note {
-  padding: 5px 7px;
-  border: 1px solid var(--face-lo);
-  background: var(--face);
-  color: #000;
-}
 
 .form {
   display: grid;
